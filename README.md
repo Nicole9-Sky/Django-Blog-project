@@ -11,8 +11,8 @@
 </div>
 
 <div align="center">
-  <img src="https://via.placeholder.com/800x400?text=Simple+Django+Blog" alt="Simple Django Blog Screenshot" width="800px"/>
-  <p><em>Replace this placeholder with your actual screenshot</em></p>
+  <img src="https://github.com/ffiruzi/Simple-Django-Blog/blob/main/screenshot.png" alt="Simple Django Blog Screenshot" width="800px"/>
+  <p><em>screenshot of the project</em></p>
 </div>
 
 ## 📜 Overview
