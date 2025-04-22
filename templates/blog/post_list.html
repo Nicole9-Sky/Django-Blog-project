@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Blog</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container"> <h1>Blog Posts</h1>
+
+        <div class="posts-grid"> <ul>
+                {% for post in posts %}
+                <li>
+                    <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
+                    <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
+                    {% if post.category %}
+                        <p class="post-meta">Category: {{ post.category.name }}</p>
+                    {% endif %}
+                    {% if post.image %}
+                        <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
+                    {% endif %}
+                    <div class="post-content">
+                         <p>{{ post.content|truncatechars:250 }}</p>
+                    </div>
+                    <a href="{% url 'post_detail' post.id %}">Read More</a>
+                </li>
+                {% empty %}
+                <li>No blog posts found.</li>
+                {% endfor %}
+            </ul>
+        </div> </div>
+</body>
+</html>

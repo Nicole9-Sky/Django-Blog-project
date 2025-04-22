@@ -1,0 +1,194 @@
+/* simpleblogproject/static/css/style.css */
+
+/* Basic body and overall container styling */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Headings and links */
+h1, h2, h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+h1 {
+    text-align: center;
+    color: #007bff; /* A touch of color */
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Navigation styling */
+nav {
+    margin-bottom: 20px;
+}
+
+nav a {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+nav a:hover {
+    background-color: #0056b3;
+    text-decoration: none;
+}
+
+
+/* Style for the list of posts on the homepage (grid layout) */
+.posts-grid {
+    display: grid;
+    /* Create 2 columns with equal width */
+    grid-template-columns: 1fr 1fr;
+    /* Gap between grid items */
+    gap: 30px; /* Adjust as needed */
+    margin-top: 20px; /* Add some space below the heading */
+}
+
+/* Remove default list styling */
+.posts-grid ul {
+     list-style: none;
+     padding: 0;
+     margin: 0; /* Remove default ul margin */
+     display: contents; /* Allow list items to directly participate in the grid */
+}
+
+/* Style the individual list items (blog post cards) */
+.posts-grid li {
+    border: 1px solid #ddd; /* Add a subtle border */
+    padding: 15px;
+    margin-bottom: 0; /* Remove default bottom margin from previous list styling */
+    border-radius: 5px;
+    background-color: #fff; /* Ensure background is white */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    display: flex; /* Use flex to arrange content vertically within the card */
+    flex-direction: column;
+    justify-content: space-between; /* Distribute space vertically */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover effect */
+}
+
+.posts-grid li:hover {
+    transform: translateY(-5px); /* Lift card slightly on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhance shadow on hover */
+}
+
+/* Keep border for the last item in grid - override previous li:last-child */
+.posts-grid li:last-child {
+     border-bottom: 1px solid #ddd;
+     margin-bottom: 0;
+     padding-bottom: 15px; /* Ensure consistent padding */
+}
+
+
+.posts-grid li h2 {
+    margin-top: 0; /* Adjust spacing */
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.posts-grid li .post-meta {
+    margin-bottom: 10px;
+    font-size: 0.85em; /* Slightly smaller meta text */
+    color: #555;
+}
+
+/* Styling for the post image within the grid item */
+.posts-grid li .post-image {
+    width: 100%; /* Make image fill the width of its grid item */
+    height: 180px; /* Fixed height for images (adjust as needed) */
+    object-fit: cover; /* Crop image to fit the height without distortion */
+    margin-bottom: 15px;
+    border-radius: 4px;
+    display: block; /* Remove extra space below image */
+}
+
+/* Styling for the post content snippet in the grid item */
+.posts-grid li .post-content {
+    margin-top: 0; /* Adjust spacing */
+    margin-bottom: 15px;
+    flex-grow: 1; /* Allow content paragraph to take available space */
+    overflow: hidden; /* Hide overflowing text if truncatechars is used */
+    text-overflow: ellipsis; /* Add ellipsis for truncated text (might need adjustment depending on browser/content) */
+}
+
+/* Style for the "Read More" link */
+.posts-grid li a:last-child { /* Select the last link in the list item (the read more link) */
+    display: inline-block;
+    margin-top: auto; /* Push the link to the bottom if using flex */
+    font-weight: bold;
+}
+
+
+/* Styling for the Post Detail page */
+.post-detail h1 {
+    text-align: left; /* Align title left on detail page */
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.post-detail .post-meta {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 20px;
+    display: block; /* Ensure meta info is on its own line */
+}
+
+.post-detail .post-image {
+    max-width: 100%; /* Make detail image responsive */
+    height: auto; /* Allow height to adjust */
+    margin-bottom: 20px;
+    border-radius: 8px;
+    display: block;
+    margin-left: auto; /* Center image if it's smaller than container */
+    margin-right: auto;
+}
+
+.post-detail .post-content {
+    margin-top: 20px;
+    line-height: 1.7; /* Improve readability for long text */
+    white-space: pre-wrap; /* Preserve line breaks from |linebreaksbr */
+    word-wrap: break-word; /* Prevent long words from overflowing */
+}
+
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .posts-grid {
+        grid-template-columns: 1fr; /* Single column layout */
+        gap: 20px;
+    }
+
+     .posts-grid li {
+         margin-bottom: 0; /* Reset margin */
+     }
+
+     .container {
+         padding: 15px; /* Reduce padding on smaller screens */
+     }
+}
