@@ -1,0 +1,99 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ user.username }}'s Profile - Simple Blog{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            {% if user.profile.profile_pic %}
+                <img src="{{ user.profile.profile_pic_url }}" alt="{{ user.username }}">
+            {% else %}
+                <div class="profile-avatar-placeholder">{{ user.username|first|upper }}</div>
+            {% endif %}
+        </div>
+        <div class="profile-info">
+            <h2>{{ user.username }}</h2>
+            <p class="profile-name">{{ user.first_name }} {{ user.last_name }}</p>
+            <p class="profile-email">{{ user.email }}</p>
+            {% if user.profile.website %}
+                <p class="profile-website"><a href="{{ user.profile.website }}" target="_blank">{{ user.profile.website }}</a></p>
+            {% endif %}
+        </div>
+    </div>
+    
+    {% if user.profile.bio %}
+        <div class="profile-bio">
+            <h3>Bio</h3>
+            <p>{{ user.profile.bio }}</p>
+        </div>
+    {% endif %}
+    
+    <div class="profile-actions">
+        <h3>Update Profile</h3>
+        <form method="post" enctype="multipart/form-data" class="profile-form">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-column">
+                    <h4>Account Information</h4>
+                    {% for field in user_form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% for error in field.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-column">
+                    <h4>Profile Information</h4>
+                    {% for field in profile_form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% for error in field.errors %}
+                                <div class="error-message">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="btn">Save Changes</button>
+        </form>
+    </div>
+    
+    <div class="user-posts">
+        <h3>My Posts</h3>
+        {% if user_posts %}
+            <div class="posts-grid">
+                <ul>
+                    {% for post in user_posts %}
+                        <li>
+                            <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
+                            <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
+                            {% if post.category %}
+                                <p class="post-meta">Category: {{ post.category.name }}</p>
+                            {% endif %}
+                            {% if post.image %}
+                                <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
+                            {% endif %}
+                            <div class="post-content">
+                                <p>{{ post.content|truncatechars:150 }}</p>
+                            </div>
+                            <div class="post-actions">
+                                <a href="{% url 'post_detail' post.id %}" class="btn-small">View</a>
+                                <a href="{% url 'update_post' post.id %}" class="btn-small">Edit</a>
+                                <a href="{% url 'delete_post' post.id %}" class="btn-small btn-danger">Delete</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>You haven't created any posts yet.</p>
+            <a href="{% url 'create_post' %}" class="btn">Create Your First Post</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

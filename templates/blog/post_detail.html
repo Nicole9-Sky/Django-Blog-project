@@ -1,27 +1,35 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.title }} - Simple Blog</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"> </head>
-<body>
-    <div class="container post-detail"> <nav>
-            <p><a href="{% url 'post_list' %}">← Back to Blog List</a></p>
-        </nav>
-        <h1>{{ post.title }}</h1>
-        <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
-         {% if post.category %}
-            <p class="post-meta">Category: {{ post.category.name }}</p>
-        {% endif %}
+{% extends 'blog/base.html' %}
 
-        {% if post.image %}
-            <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
-        {% endif %}
+{% block title %}{{ post.title }} - Simple Blog{% endblock %}
 
-        <div class="post-content">
-            {{ post.content|linebreaksbr }}
-        </div>
-    </div> </body>
-</html>
+{% block content %}
+<div class="post-detail">
+    <nav>
+        <p><a href="{% url 'post_list' %}">← Back to Blog List</a></p>
+    </nav>
+    <h1>{{ post.title }}</h1>
+
+    {% if post.author %}
+        <p class="post-meta">By <a href="{% url 'author_profile' post.author.username %}">{{ post.author.username }}</a></p>
+    {% endif %}
+    <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
+    {% if post.category %}
+        <p class="post-meta">Category: {{ post.category.name }}</p>
+    {% endif %}
+
+    {% if post.image %}
+        <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
+    {% endif %}
+
+    <div class="post-content">
+        {{ post.content|linebreaksbr }}
+    </div>
+
+    {% if user.is_authenticated and post.author == user %}
+    <div class="post-actions">
+        <a href="{% url 'update_post' post.id %}" class="btn">Edit Post</a>
+        <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">Delete Post</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
