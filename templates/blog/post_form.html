@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ title }} - Simple Blog{% endblock %}
+
+{% block content %}
+<div class="post-form-container">
+    <h2>{{ title }}</h2>
+    <form method="post" enctype="multipart/form-data" class="post-form">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% for error in field.errors %}
+                    <div class="error-message">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn">Save Post</button>
+        <a href="{% url 'post_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

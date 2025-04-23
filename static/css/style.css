@@ -1,5 +1,3 @@
-/* simpleblogproject/static/css/style.css */
-
 /* Basic body and overall container styling */
 body {
     font-family: 'Arial', sans-serif;
@@ -11,12 +9,55 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 20px auto;
     background: #fff;
     padding: 20px 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+}
+
+/* Header and navigation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.site-title {
+    margin: 0;
+}
+
+.site-title a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-nav li {
+    margin-left: 20px;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.main-nav a:hover {
+    background-color: #007bff;
+    color: white;
 }
 
 /* Headings and links */
@@ -26,7 +67,6 @@ h1, h2, h3 {
 }
 
 h1 {
-    text-align: center;
     color: #007bff; /* A touch of color */
 }
 
@@ -39,27 +79,233 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Navigation styling */
-nav {
+/* Messages */
+.messages {
     margin-bottom: 20px;
 }
 
-nav a {
-    display: inline-block;
-    margin-right: 10px;
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: white;
+.message {
+    padding: 10px 15px;
+    margin-bottom: 10px;
     border-radius: 4px;
-    text-decoration: none;
-    transition: background-color 0.3s ease; /* Smooth hover effect */
 }
 
-nav a:hover {
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.form-text {
+    color: #666;
+    font-size: 0.85em;
+    margin-top: 5px;
+    display: block;
+}
+
+.error-message {
+    color: #721c24;
+    margin-top: 5px;
+    font-size: 0.85em;
+}
+
+/* Buttons */
+.btn, button[type="submit"] {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover, button[type="submit"]:hover {
     background-color: #0056b3;
     text-decoration: none;
 }
 
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+/* Authentication forms */
+.auth-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.auth-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+/* Profile pages */
+.profile-container {
+    margin-bottom: 30px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-avatar-placeholder {
+    font-size: 48px;
+    color: #6c757d;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h2 {
+    margin-bottom: 5px;
+}
+
+.profile-name, .profile-email, .profile-website {
+    margin: 5px 0;
+}
+
+.profile-bio {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.profile-actions, .user-posts, .author-posts {
+    margin-top: 30px;
+}
+
+.profile-form {
+    margin-top: 15px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-column {
+    flex: 1;
+}
+
+/* Post management */
+.post-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.post-form {
+    margin-top: 20px;
+}
+
+.delete-confirmation {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.post-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
 
 /* Style for the list of posts on the homepage (grid layout) */
 .posts-grid {
@@ -67,87 +313,84 @@ nav a:hover {
     /* Create 2 columns with equal width */
     grid-template-columns: 1fr 1fr;
     /* Gap between grid items */
-    gap: 30px; /* Adjust as needed */
-    margin-top: 20px; /* Add some space below the heading */
+    gap: 30px;
+    margin-top: 20px;
 }
 
 /* Remove default list styling */
 .posts-grid ul {
      list-style: none;
      padding: 0;
-     margin: 0; /* Remove default ul margin */
-     display: contents; /* Allow list items to directly participate in the grid */
+     margin: 0;
+     display: contents;
 }
 
 /* Style the individual list items (blog post cards) */
 .posts-grid li {
-    border: 1px solid #ddd; /* Add a subtle border */
+    border: 1px solid #ddd;
     padding: 15px;
-    margin-bottom: 0; /* Remove default bottom margin from previous list styling */
+    margin-bottom: 0;
     border-radius: 5px;
-    background-color: #fff; /* Ensure background is white */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-    display: flex; /* Use flex to arrange content vertically within the card */
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Distribute space vertically */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover effect */
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .posts-grid li:hover {
-    transform: translateY(-5px); /* Lift card slightly on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhance shadow on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Keep border for the last item in grid - override previous li:last-child */
 .posts-grid li:last-child {
      border-bottom: 1px solid #ddd;
      margin-bottom: 0;
-     padding-bottom: 15px; /* Ensure consistent padding */
+     padding-bottom: 15px;
 }
 
-
 .posts-grid li h2 {
-    margin-top: 0; /* Adjust spacing */
+    margin-top: 0;
     margin-bottom: 10px;
     line-height: 1.3;
 }
 
 .posts-grid li .post-meta {
     margin-bottom: 10px;
-    font-size: 0.85em; /* Slightly smaller meta text */
+    font-size: 0.85em;
     color: #555;
 }
 
 /* Styling for the post image within the grid item */
 .posts-grid li .post-image {
-    width: 100%; /* Make image fill the width of its grid item */
-    height: 180px; /* Fixed height for images (adjust as needed) */
-    object-fit: cover; /* Crop image to fit the height without distortion */
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
     margin-bottom: 15px;
     border-radius: 4px;
-    display: block; /* Remove extra space below image */
+    display: block;
 }
 
 /* Styling for the post content snippet in the grid item */
 .posts-grid li .post-content {
-    margin-top: 0; /* Adjust spacing */
+    margin-top: 0;
     margin-bottom: 15px;
-    flex-grow: 1; /* Allow content paragraph to take available space */
-    overflow: hidden; /* Hide overflowing text if truncatechars is used */
-    text-overflow: ellipsis; /* Add ellipsis for truncated text (might need adjustment depending on browser/content) */
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Style for the "Read More" link */
-.posts-grid li a:last-child { /* Select the last link in the list item (the read more link) */
+.posts-grid li a:last-child {
     display: inline-block;
-    margin-top: auto; /* Push the link to the bottom if using flex */
+    margin-top: auto;
     font-weight: bold;
 }
 
-
 /* Styling for the Post Detail page */
 .post-detail h1 {
-    text-align: left; /* Align title left on detail page */
+    text-align: left;
     color: #333;
     margin-bottom: 5px;
 }
@@ -156,39 +399,77 @@ nav a:hover {
     font-size: 0.9em;
     color: #666;
     margin-bottom: 20px;
-    display: block; /* Ensure meta info is on its own line */
+    display: block;
 }
 
 .post-detail .post-image {
-    max-width: 100%; /* Make detail image responsive */
-    height: auto; /* Allow height to adjust */
+    max-width: 100%;
+    height: auto;
     margin-bottom: 20px;
     border-radius: 8px;
     display: block;
-    margin-left: auto; /* Center image if it's smaller than container */
+    margin-left: auto;
     margin-right: auto;
 }
 
 .post-detail .post-content {
     margin-top: 20px;
-    line-height: 1.7; /* Improve readability for long text */
-    white-space: pre-wrap; /* Preserve line breaks from |linebreaksbr */
-    word-wrap: break-word; /* Prevent long words from overflowing */
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
+/* Footer */
+footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.9em;
+}
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .main-nav {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+    }
+
+    .main-nav li {
+        margin-left: 0;
+        margin-bottom: 5px;
+    }
+
     .posts-grid {
-        grid-template-columns: 1fr; /* Single column layout */
+        grid-template-columns: 1fr;
         gap: 20px;
     }
 
-     .posts-grid li {
-         margin-bottom: 0; /* Reset margin */
-     }
+    .form-row {
+        flex-direction: column;
+    }
 
-     .container {
-         padding: 15px; /* Reduce padding on smaller screens */
-     }
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-avatar {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
 }

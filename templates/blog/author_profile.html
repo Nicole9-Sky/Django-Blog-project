@@ -1,0 +1,61 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ author.username }}'s Profile - Simple Blog{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            {% if author.profile.profile_pic %}
+                <img src="{{ author.profile.profile_pic_url }}" alt="{{ author.username }}">
+            {% else %}
+                <div class="profile-avatar-placeholder">{{ author.username|first|upper }}</div>
+            {% endif %}
+        </div>
+        <div class="profile-info">
+            <h2>{{ author.username }}</h2>
+            {% if author.first_name or author.last_name %}
+                <p class="profile-name">{{ author.first_name }} {{ author.last_name }}</p>
+            {% endif %}
+            {% if author.profile.website %}
+                <p class="profile-website"><a href="{{ author.profile.website }}" target="_blank">{{ author.profile.website }}</a></p>
+            {% endif %}
+        </div>
+    </div>
+    
+    {% if author.profile.bio %}
+        <div class="profile-bio">
+            <h3>Bio</h3>
+            <p>{{ author.profile.bio }}</p>
+        </div>
+    {% endif %}
+    
+    <div class="author-posts">
+        <h3>Posts by {{ author.username }}</h3>
+        {% if author_posts %}
+            <div class="posts-grid">
+                <ul>
+                    {% for post in author_posts %}
+                        <li>
+                            <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
+                            <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
+                            {% if post.category %}
+                                <p class="post-meta">Category: {{ post.category.name }}</p>
+                            {% endif %}
+                            {% if post.image %}
+                                <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
+                            {% endif %}
+                            <div class="post-content">
+                                <p>{{ post.content|truncatechars:150 }}</p>
+                            </div>
+                            <a href="{% url 'post_detail' post.id %}">Read More</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>{{ author.username }} hasn't created any posts yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
