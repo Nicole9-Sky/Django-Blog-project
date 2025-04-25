@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Post, Category, UserProfile
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserUpdateForm, PostForm
+from .models import Comment
+from .forms import CommentForm
 
 
 def post_list(request):
@@ -22,13 +24,67 @@ def post_list(request):
 
 def post_detail(request, post_id):
     """
-    Displays a single blog post.
+    Displays a single blog post and handles comment submission.
     """
     post = get_object_or_404(Post, pk=post_id)
+
+    # Only get approved comments
+    comments = post.comments.filter(parent=None, is_approved=True)
+    new_comment = None
+    comment_form = None
+
+    if request.user.is_authenticated:
+        # Comment form processing
+        if request.method == 'POST':
+            comment_form = CommentForm(data=request.POST)
+            if comment_form.is_valid():
+                new_comment = comment_form.save(commit=False)
+                new_comment.post = post
+                new_comment.author = request.user
+
+                # Handle reply to comment
+                parent_id = request.POST.get('parent_id')
+                if parent_id:
+                    new_comment.parent = Comment.objects.get(id=parent_id)
+
+                # Save the comment (is_approved defaults to False in the model)
+                new_comment.save()
+
+                # Notify user that comment is pending approval
+                messages.success(request, 'Your comment has been submitted and is awaiting approval.')
+                return redirect('post_detail', post_id=post.id)
+        else:
+            comment_form = CommentForm()
+
     context = {
-        'post': post
+        'post': post,
+        'comments': comments,
+        'comment_form': comment_form,
     }
     return render(request, 'blog/post_detail.html', context)
+
+
+@login_required
+def delete_comment(request, comment_id):
+    """
+    Delete a comment.
+    """
+    comment = get_object_or_404(Comment, pk=comment_id)
+
+    # Stricter permission check
+    if not (comment.author == request.user or request.user.is_staff):
+        messages.error(request, "You cannot delete someone else's comment!")
+        return redirect('post_detail', post_id=comment.post.id)
+
+    post_id = comment.post.id
+
+    if request.method == 'POST':
+        comment.delete()
+        messages.success(request, 'The comment has been deleted!')
+        return redirect('post_detail', post_id=post_id)
+
+    return render(request, 'blog/comment_confirm_delete.html', {'comment': comment})
+
 
 
 def register(request):
