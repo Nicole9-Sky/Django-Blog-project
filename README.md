@@ -19,7 +19,7 @@
 
 A straightforward, minimal blog platform built with the Django web framework. This project serves as a foundational example demonstrating core Django concepts, including models, the admin site, views, URL routing, templates, static/media file handling, with a touch of modern styling and responsive design.
 
-It includes a robust user authentication system that allows users to create accounts, manage profiles, and author their own blog posts with full CRUD functionality.
+It includes a robust user authentication system that allows users to create accounts, manage profiles, and author their own blog posts with full CRUD functionality. Users can also engage with content through a moderated commenting system.
 
 It's designed to be easy to understand and extend, making it a great starting point for learning Django or showcasing web development skills.
 
@@ -31,6 +31,7 @@ It's designed to be easy to understand and extend, making it a great starting po
 - 👥 User profiles with customizable bio and profile picture
 - 🔒 Permission-based access (only authors can edit their own posts)
 - 📷 Upload and display images for each blog post
+- 💬 Moderated commenting system with nested replies
 - 🎨 Clean, minimal, and responsive design with a two-column layout
 - 📱 Mobile-friendly interface for reading on any device
 
@@ -49,10 +50,17 @@ It's designed to be easy to understand and extend, making it a great starting po
 - 👁️ View posts by specific authors
 - 🏷️ Categorize posts for better organization
 
+### Comment System
+- 💬 User commenting on blog posts
+- 🧵 Threaded comments with reply functionality
+- 👮 Comment moderation (admin approval required)
+- 🗑️ Comment deletion (users can only delete their own comments)
+- 👑 Admin control over all comments through the Django admin
+
 ## 🛠️ Technologies Used
 
 - **Backend**: Django (Python Web Framework)
-- **Frontend**: HTML, CSS
+- **Frontend**: HTML, CSS, JavaScript (for comment interactions)
 - **Database**: SQLite (default for Django, included)
 - **Image Handling**: Pillow (Python Imaging Library)
 - **Authentication**: Django's built-in auth system with custom extensions
@@ -127,6 +135,16 @@ To populate the blog with content:
 4. Assign a category and upload an image (optional)
 5. View your published content on the main site or your profile page
 
+### Comment Moderation
+
+By default, all comments require approval before being displayed:
+
+1. Users can submit comments on any post after logging in
+2. Comments are held for moderation and not displayed immediately
+3. Site administrators can approve or reject comments through the admin interface
+4. Only approved comments are displayed to all users
+5. Users can only delete their own comments
+
 ## 📁 File Structure Overview
 
 The project follows a standard Django project structure:
@@ -145,8 +163,8 @@ Simple-Django-Blog/
 │   ├── __init__.py
 │   ├── admin.py             # Admin registrations for models
 │   ├── apps.py
-│   ├── forms.py             # Forms for authentication and post management
-│   ├── models.py            # Database models (Post, Category, UserProfile)
+│   ├── forms.py             # Forms for authentication, post management, and comments
+│   ├── models.py            # Database models (Post, Category, UserProfile, Comment)
 │   ├── tests.py             # Placeholder for app tests
 │   ├── urls.py              # App-level URL patterns
 │   └── views.py             # Logic to handle requests and return responses
@@ -154,13 +172,14 @@ Simple-Django-Blog/
 │   └── blog/
 │       ├── base.html        # Base template with navigation and common elements
 │       ├── post_list.html   # Template for displaying list of posts
-│       ├── post_detail.html # Template for displaying a single post
+│       ├── post_detail.html # Template for displaying a single post with comments
 │       ├── register.html    # User registration form
 │       ├── login.html       # User login form
 │       ├── profile.html     # User profile management
 │       ├── author_profile.html  # View another user's profile
 │       ├── post_form.html   # Form for creating/editing posts
-│       └── post_confirm_delete.html # Confirmation for post deletion
+│       ├── post_confirm_delete.html # Confirmation for post deletion
+│       └── comment_confirm_delete.html # Confirmation for comment deletion
 ├── static/                  # Project-level static files directory
 │   └── css/
 │       └── style.css        # Custom CSS for styling
@@ -175,17 +194,17 @@ Simple-Django-Blog/
 
 This project provides a solid starting point. Here are some ideas for future development to enhance its features:
 
-- 💬 Commenting feature for blog posts
 - 🔍 Search functionality for finding posts
 - 📄 Pagination for the blog list page
 - 📝 Rich text editor for post content
 - 📊 Analytics dashboard for tracking post views
 - 📱 Social media sharing buttons
-- 🔔 Notification system for new posts
+- 🔔 Notification system for new posts or comments
 - 🔑 Social authentication options (Google, Facebook, etc.)
 - 📧 Email subscription for blog updates
 - 🏷️ Tag system for more granular content organization
 - 🧪 Comprehensive test suite
+- 🌟 Comment rating/liking system
 
 ## 📜 License
 

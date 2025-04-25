@@ -60,3 +60,18 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
         UserProfile.objects.create(user=instance)
     else:
         instance.profile.save()
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+    is_approved = models.BooleanField(default=False)  # Set to False if you want moderation
+
+    class Meta:
+        ordering = ['created_date']
+
+    def __str__(self):
+        return f'Comment by {self.author.username} on {self.post.title}'

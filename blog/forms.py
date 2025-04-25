@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import UserProfile, Post
+from .models import Comment
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -51,4 +52,13 @@ class PostForm(forms.ModelForm):
         fields = ('title', 'content', 'category', 'image')
         widgets = {
             'content': forms.Textarea(attrs={'rows': 8}),
+        }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('content',)
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Add a comment...'}),
         }
