@@ -9,6 +9,8 @@ from .models import Post, Category, UserProfile
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserUpdateForm, PostForm
 from .models import Comment
 from .forms import CommentForm
+from django.db.models import Q
+from .forms import SearchForm
 
 
 def post_list(request):
@@ -250,3 +252,28 @@ def author_profile(request, username):
     }
 
     return render(request, 'blog/author_profile.html', context)
+
+
+def search_posts(request):
+    """
+    Search for posts by title, content, or author username.
+    """
+    search_form = SearchForm(request.GET)
+    query = request.GET.get('query', '')
+    results = []
+
+    if query:
+        # Search in title, content, and author's username
+        results = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(author__username__icontains=query)
+        ).distinct()
+
+    context = {
+        'search_form': search_form,
+        'query': query,
+        'results': results
+    }
+
+    return render(request, 'blog/search_results.html', context)

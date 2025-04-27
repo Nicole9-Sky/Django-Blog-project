@@ -17,7 +17,7 @@ body {
     border-radius: 8px;
 }
 
-/* Header and navigation */
+/* Updated header and navigation */
 header {
     display: flex;
     justify-content: space-between;
@@ -25,10 +25,25 @@ header {
     padding-bottom: 20px;
     margin-bottom: 20px;
     border-bottom: 1px solid #eee;
+    flex-wrap: nowrap;
+}
+
+.header-left {
+    flex-shrink: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+    gap: 15px;
 }
 
 .site-title {
     margin: 0;
+    font-size: 1.8rem;
+    white-space: nowrap;
 }
 
 .site-title a {
@@ -36,23 +51,70 @@ header {
     text-decoration: none;
 }
 
+/* Compact search box */
+.search-box {
+    flex-shrink: 1;
+    max-width: 300px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+/* Update the search input styles to add spacing */
+.search-input {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;  /* Changed from 4px 0 0 4px to make it fully rounded */
+    width: 180px;
+    font-size: 14px;
+    height: 34px;
+    margin-right: 5px;  /* Add margin to create spacing */
+}
+
+/* Update the search button styles to make it fully rounded */
+.search-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;  /* Changed from 0 4px 4px 0 to make it fully rounded */
+    cursor: pointer;
+    height: 34px;
+    font-size: 14px;
+}
+
+.search-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Main navigation */
+.main-nav {
+    flex-shrink: 0;
+}
+
 .main-nav ul {
     display: flex;
     list-style: none;
     padding: 0;
     margin: 0;
+    gap: 5px;
 }
 
 .main-nav li {
-    margin-left: 20px;
+    margin: 0;
 }
 
 .main-nav a {
     text-decoration: none;
     color: #333;
     font-weight: bold;
-    padding: 5px 10px;
+    padding: 5px 8px;
     border-radius: 4px;
+    white-space: nowrap;
+    font-size: 14px;
+    display: block;
 }
 
 .main-nav a:hover {
@@ -500,6 +562,16 @@ textarea {
     border-left: 3px solid #007bff;
 }
 
+/* Search results page */
+.search-results h1 {
+    margin-bottom: 20px;
+}
+
+.search-results h2 {
+    margin: 20px 0;
+    color: #007bff;
+}
+
 /* Footer */
 footer {
     margin-top: 40px;
@@ -518,21 +590,31 @@ footer {
 
     header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
     }
 
-    .main-nav {
+    .header-right {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
         margin-top: 10px;
+    }
+
+    .search-box {
+        max-width: 100%;
+    }
+
+    .search-form {
+        width: 100%;
+    }
+
+    .search-input {
         width: 100%;
     }
 
     .main-nav ul {
-        flex-direction: column;
-    }
-
-    .main-nav li {
-        margin-left: 0;
-        margin-bottom: 5px;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .posts-grid {
