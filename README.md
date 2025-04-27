@@ -27,6 +27,7 @@ It's designed to be easy to understand and extend, making it a great starting po
 
 ### Core Features
 - 📝 Create, view, and manage blog posts and categories
+- 🔍 Search for posts by title, content, or author name
 - 👤 Complete user authentication (register, login, logout)
 - 👥 User profiles with customizable bio and profile picture
 - 🔒 Permission-based access (only authors can edit their own posts)
@@ -49,6 +50,12 @@ It's designed to be easy to understand and extend, making it a great starting po
 - 🗑️ Delete your own posts
 - 👁️ View posts by specific authors
 - 🏷️ Categorize posts for better organization
+
+### Search Functionality
+- 🔍 Search for posts by title, content, or author name
+- 📊 Dedicated search results page with user-friendly layout
+- 🔄 Search form accessible from any page in the header
+- 💬 Clear feedback on search results and counts
 
 ### Comment System
 - 💬 User commenting on blog posts
@@ -163,7 +170,7 @@ Simple-Django-Blog/
 │   ├── __init__.py
 │   ├── admin.py             # Admin registrations for models
 │   ├── apps.py
-│   ├── forms.py             # Forms for authentication, post management, and comments
+│   ├── forms.py             # Forms for authentication, post management, comments, and search
 │   ├── models.py            # Database models (Post, Category, UserProfile, Comment)
 │   ├── tests.py             # Placeholder for app tests
 │   ├── urls.py              # App-level URL patterns
@@ -179,7 +186,8 @@ Simple-Django-Blog/
 │       ├── author_profile.html  # View another user's profile
 │       ├── post_form.html   # Form for creating/editing posts
 │       ├── post_confirm_delete.html # Confirmation for post deletion
-│       └── comment_confirm_delete.html # Confirmation for comment deletion
+│       ├── comment_confirm_delete.html # Confirmation for comment deletion
+│       └── search_results.html # Display search results
 ├── static/                  # Project-level static files directory
 │   └── css/
 │       └── style.css        # Custom CSS for styling
@@ -194,7 +202,6 @@ Simple-Django-Blog/
 
 This project provides a solid starting point. Here are some ideas for future development to enhance its features:
 
-- 🔍 Search functionality for finding posts
 - 📄 Pagination for the blog list page
 - 📝 Rich text editor for post content
 - 📊 Analytics dashboard for tracking post views

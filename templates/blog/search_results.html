@@ -1,0 +1,52 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Search Results - Simple Blog{% endblock %}
+
+{% block content %}
+<div class="search-results">
+    <h1>Search Results</h1>
+    
+    <div class="search-box">
+        <form method="get" action="{% url 'search_posts' %}" class="search-form">
+            {{ search_form.query }}
+            <button type="submit" class="btn search-btn">Search</button>
+        </form>
+    </div>
+    
+    {% if query %}
+        <h2>Results for "{{ query }}"</h2>
+        
+        {% if results %}
+            <p>Found {{ results|length }} result{{ results|length|pluralize }}.</p>
+            
+            <div class="posts-grid">
+                <ul>
+                    {% for post in results %}
+                    <li>
+                        <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
+                        {% if post.author %}
+                            <p class="post-meta">By <a href="{% url 'author_profile' post.author.username %}">{{ post.author.username }}</a></p>
+                        {% endif %}
+                        <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
+                        {% if post.category %}
+                            <p class="post-meta">Category: {{ post.category.name }}</p>
+                        {% endif %}
+                        {% if post.image %}
+                            <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
+                        {% endif %}
+                        <div class="post-content">
+                            <p>{{ post.content|truncatechars:250 }}</p>
+                        </div>
+                        <a href="{% url 'post_detail' post.id %}">Read More</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>No posts found matching your search criteria.</p>
+        {% endif %}
+    {% else %}
+        <p>Please enter a search term to find posts.</p>
+    {% endif %}
+</div>
+{% endblock %}
