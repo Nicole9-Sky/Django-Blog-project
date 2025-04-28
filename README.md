@@ -65,6 +65,14 @@ It's designed to be easy to understand and extend, making it a great starting po
 - 🗑️ Comment deletion (users can only delete their own comments)
 - 👑 Admin control over all comments through the Django admin
 
+### Pagination
+- 📄 Post listings divided into manageable pages (6 posts per page)
+- 🔢 Intuitive page navigation with first/previous/next/last controls
+- 🔍 Maintains search parameters when navigating between results pages
+- 📱 Responsive design that works on all device sizes
+- 🧩 Consistent implementation across all listing views (blog list, profiles, search)
+
+
 ## 🛠️ Technologies Used
 
 - **Backend**: Django (Python Web Framework)
