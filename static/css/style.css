@@ -572,6 +572,54 @@ textarea {
     color: #007bff;
 }
 
+.pagination {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.pagination .step-links {
+    display: inline-block;
+    background-color: #f8f9fa;
+    padding: 8px 15px;
+    border-radius: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.pagination .current-page {
+    display: inline-block;
+    padding: 5px 12px;
+    margin: 0 10px;
+    background-color: #fff;
+    border-radius: 20px;
+    border: 1px solid #dee2e6;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.pagination a.btn-small {
+    background-color: #fff;
+    color: #007bff;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s;
+}
+
+.pagination a.btn-small:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+@media (max-width: 576px) {
+    .pagination .current-page {
+        margin: 0 5px;
+    }
+
+    .pagination a.btn-small {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+}
+
 /* Footer */
 footer {
     margin-top: 40px;

@@ -62,38 +62,47 @@
             <button type="submit" class="btn">Save Changes</button>
         </form>
     </div>
-    
     <div class="user-posts">
-        <h3>My Posts</h3>
-        {% if user_posts %}
-            <div class="posts-grid">
-                <ul>
-                    {% for post in user_posts %}
-                        <li>
-                            <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
-                            <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
-                            {% if post.category %}
-                                <p class="post-meta">Category: {{ post.category.name }}</p>
-                            {% endif %}
-                            {% if post.image %}
-                                <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
-                            {% endif %}
-                            <div class="post-content">
-                                <p>{{ post.content|truncatechars:150 }}</p>
-                            </div>
-                            <div class="post-actions">
-                                <a href="{% url 'post_detail' post.id %}" class="btn-small">View</a>
-                                <a href="{% url 'update_post' post.id %}" class="btn-small">Edit</a>
-                                <a href="{% url 'delete_post' post.id %}" class="btn-small btn-danger">Delete</a>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% else %}
-            <p>You haven't created any posts yet.</p>
-            <a href="{% url 'create_post' %}" class="btn">Create Your First Post</a>
+    <h3>My Posts</h3>
+    {% if user_posts %}
+
+
+
+        <div class="posts-grid">
+            <ul>
+                {% for post in user_posts %}
+                    <li>
+                        <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
+                        <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
+                        {% if post.category %}
+                            <p class="post-meta">Category: {{ post.category.name }}</p>
+                        {% endif %}
+                        {% if post.image %}
+                            <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
+                        {% endif %}
+                        <div class="post-content">
+                            <p>{{ post.content|truncatechars:150 }}</p>
+                        </div>
+                        <div class="post-actions">
+                            <a href="{% url 'post_detail' post.id %}" class="btn-small">View</a>
+                            <a href="{% url 'update_post' post.id %}" class="btn-small">Edit</a>
+                            <a href="{% url 'delete_post' post.id %}" class="btn-small btn-danger">Delete</a>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li>No posts found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Pagination -->
+        {% if user_posts.has_other_pages %}
+            {% include 'blog/pagination.html' with page_obj=user_posts %}
         {% endif %}
-    </div>
+    {% else %}
+        <p>You haven't created any posts yet.</p>
+        <a href="{% url 'create_post' %}" class="btn">Create Your First Post</a>
+    {% endif %}
+</div>
 </div>
 {% endblock %}
