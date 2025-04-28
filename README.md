@@ -11,7 +11,7 @@
 </div>
 
 <div align="center">
-  <img src="screenshot_.png" alt="Simple Django Blog Screenshot" width="800px"/>
+  <img src="screenshot.png" alt="Simple Django Blog Screenshot" width="800px"/>
   <p><em>screenshot of the project</em></p>
 </div>
 
