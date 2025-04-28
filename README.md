@@ -27,6 +27,7 @@ It's designed to be easy to understand and extend, making it a great starting po
 
 ### Core Features
 - 📝 Create, view, and manage blog posts and categories
+- 📄 Pagination for all listing pages (blog list, search results, user profiles)
 - 🔍 Search for posts by title, content, or author name
 - 👤 Complete user authentication (register, login, logout)
 - 👥 User profiles with customizable bio and profile picture
@@ -180,6 +181,7 @@ Simple-Django-Blog/
 │       ├── base.html        # Base template with navigation and common elements
 │       ├── post_list.html   # Template for displaying list of posts
 │       ├── post_detail.html # Template for displaying a single post with comments
+│       ├── pagination.html  # Reusable pagination component
 │       ├── register.html    # User registration form
 │       ├── login.html       # User login form
 │       ├── profile.html     # User profile management
@@ -202,16 +204,20 @@ Simple-Django-Blog/
 
 This project provides a solid starting point. Here are some ideas for future development to enhance its features:
 
-- 📄 Pagination for the blog list page
-- 📝 Rich text editor for post content
 - 📊 Analytics dashboard for tracking post views
 - 📱 Social media sharing buttons
-- 🔔 Notification system for new posts or comments
 - 🔑 Social authentication options (Google, Facebook, etc.)
 - 📧 Email subscription for blog updates
 - 🏷️ Tag system for more granular content organization
 - 🧪 Comprehensive test suite
 - 🌟 Comment rating/liking system
+- 🔄 Related posts suggestions
+- 💻 Syntax highlighting for code snippets
+- 📑 Post series/collections functionality
+- 🗂️ Archive view by date
+- 🔍 Advanced search with filters
+- 💾 Drafts and scheduled posts
+- 🖋️ Rich text editor for post content
 
 ## 📜 License
 

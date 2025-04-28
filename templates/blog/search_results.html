@@ -1,3 +1,4 @@
+<!-- templates/blog/search_results.html -->
 {% extends 'blog/base.html' %}
 
 {% block title %}Search Results - Simple Blog{% endblock %}
@@ -5,20 +6,20 @@
 {% block content %}
 <div class="search-results">
     <h1>Search Results</h1>
-    
+
     <div class="search-box">
         <form method="get" action="{% url 'search_posts' %}" class="search-form">
             {{ search_form.query }}
             <button type="submit" class="btn search-btn">Search</button>
         </form>
     </div>
-    
+
     {% if query %}
         <h2>Results for "{{ query }}"</h2>
-        
+
         {% if results %}
-            <p>Found {{ results|length }} result{{ results|length|pluralize }}.</p>
-            
+            <p>Found {{ results.paginator.count }} result{{ results.paginator.count|pluralize }}.</p>
+
             <div class="posts-grid">
                 <ul>
                     {% for post in results %}
@@ -42,6 +43,12 @@
                     {% endfor %}
                 </ul>
             </div>
+
+            <!-- Pagination -->
+            {% if results.has_other_pages %}
+                {% include 'blog/pagination.html' with page_obj=results %}
+            {% endif %}
+
         {% else %}
             <p>No posts found matching your search criteria.</p>
         {% endif %}

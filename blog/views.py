@@ -11,17 +11,33 @@ from .models import Comment
 from .forms import CommentForm
 from django.db.models import Q
 from .forms import SearchForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def post_list(request):
     """
-    Displays a list of all blog posts.
+    Displays a paginated list of all blog posts.
     """
-    posts = Post.objects.all()
+    posts_list = Post.objects.all()
+
+    # Set up pagination with 6 posts per page
+    paginator = Paginator(posts_list, 6)  # Show 6 posts per page
+    page = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range, deliver last page of results
+        posts = paginator.page(paginator.num_pages)
+
     context = {
         'posts': posts
     }
     return render(request, 'blog/post_list.html', context)
+
 
 
 def post_detail(request, post_id):
@@ -145,11 +161,52 @@ def user_logout(request):
     messages.success(request, 'You have been logged out.')
     return redirect('post_list')
 
+#
+# @login_required
+# def profile(request):
+#     """
+#     Display and update user profile with paginated posts.
+#     """
+#     if request.method == 'POST':
+#         user_form = UserUpdateForm(request.POST, instance=request.user)
+#         profile_form = UserProfileForm(request.POST, request.FILES, instance=request.user.profile)
+#
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user_form.save()
+#             profile_form.save()
+#             messages.success(request, 'Your profile has been updated!')
+#             return redirect('profile')
+#     else:
+#         user_form = UserUpdateForm(instance=request.user)
+#         profile_form = UserProfileForm(instance=request.user.profile)
+#
+#     # Get user's posts with pagination
+#     user_posts_list = Post.objects.filter(author=request.user)
+#
+#     # Set up pagination
+#     paginator = Paginator(user_posts_list, 6)  # Show 6 posts per page
+#     page = request.GET.get('page')
+#
+#     try:
+#         user_posts = paginator.page(page)
+#     except PageNotAnInteger:
+#         user_posts = paginator.page(1)
+#     except EmptyPage:
+#         user_posts = paginator.page(paginator.num_pages)
+#
+#     context = {
+#         'user_form': user_form,
+#         'profile_form': profile_form,
+#         'user_posts': user_posts
+#     }
+#
+#     return render(request, 'blog/profile.html', context)
+
 
 @login_required
 def profile(request):
     """
-    Display and update user profile.
+    Display and update user profile with paginated posts.
     """
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
@@ -164,8 +221,24 @@ def profile(request):
         user_form = UserUpdateForm(instance=request.user)
         profile_form = UserProfileForm(instance=request.user.profile)
 
-    # Get user's posts
-    user_posts = Post.objects.filter(author=request.user)
+    # Get user's posts with pagination
+    user_posts_list = Post.objects.filter(author=request.user)
+
+    # Debug: Print the count of posts found (you can remove this after fixing)
+    print(f"Found {user_posts_list.count()} posts for user {request.user.username}")
+
+    # Set up pagination
+    paginator = Paginator(user_posts_list, 6)  # Show 6 posts per page
+    page = request.GET.get('page')
+
+    try:
+        user_posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page
+        user_posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range, deliver last page of results
+        user_posts = paginator.page(paginator.num_pages)
 
     context = {
         'user_form': user_form,
@@ -174,7 +247,6 @@ def profile(request):
     }
 
     return render(request, 'blog/profile.html', context)
-
 
 @login_required
 def create_post(request):
@@ -241,10 +313,26 @@ def delete_post(request, post_id):
 
 def author_profile(request, username):
     """
-    View another user's profile and posts.
+    View another user's profile and posts with pagination.
     """
     author = get_object_or_404(User, username=username)
-    author_posts = Post.objects.filter(author=author)
+
+    # Make sure we're filtering correctly by author
+    author_posts_list = Post.objects.filter(author=author)
+
+    # Debug: Add this temporarily
+    print(f"Found {author_posts_list.count()} posts for {username}")
+
+    # Set up pagination
+    paginator = Paginator(author_posts_list, 6)  # Show 6 posts per page
+    page = request.GET.get('page')
+
+    try:
+        author_posts = paginator.page(page)
+    except PageNotAnInteger:
+        author_posts = paginator.page(1)
+    except EmptyPage:
+        author_posts = paginator.page(paginator.num_pages)
 
     context = {
         'author': author,
@@ -256,19 +344,30 @@ def author_profile(request, username):
 
 def search_posts(request):
     """
-    Search for posts by title, content, or author username.
+    Search for posts by title, content, or author username with pagination.
     """
     search_form = SearchForm(request.GET)
     query = request.GET.get('query', '')
-    results = []
+    results_list = []
 
     if query:
         # Search in title, content, and author's username
-        results = Post.objects.filter(
+        results_list = Post.objects.filter(
             Q(title__icontains=query) |
             Q(content__icontains=query) |
             Q(author__username__icontains=query)
         ).distinct()
+
+    # Set up pagination
+    paginator = Paginator(results_list, 6)  # Show 6 results per page
+    page = request.GET.get('page')
+
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
 
     context = {
         'search_form': search_form,

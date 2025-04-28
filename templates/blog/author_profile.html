@@ -31,31 +31,38 @@
     {% endif %}
     
     <div class="author-posts">
-        <h3>Posts by {{ author.username }}</h3>
-        {% if author_posts %}
-            <div class="posts-grid">
-                <ul>
-                    {% for post in author_posts %}
-                        <li>
-                            <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
-                            <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
-                            {% if post.category %}
-                                <p class="post-meta">Category: {{ post.category.name }}</p>
-                            {% endif %}
-                            {% if post.image %}
-                                <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
-                            {% endif %}
-                            <div class="post-content">
-                                <p>{{ post.content|truncatechars:150 }}</p>
-                            </div>
-                            <a href="{% url 'post_detail' post.id %}">Read More</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% else %}
-            <p>{{ author.username }} hasn't created any posts yet.</p>
+    <h3>Posts by {{ author.username }}</h3>
+    {% if author_posts %}
+        <div class="posts-grid">
+            <ul>
+                {% for post in author_posts %}
+                    <li>
+                        <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
+                        <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
+                        {% if post.category %}
+                            <p class="post-meta">Category: {{ post.category.name }}</p>
+                        {% endif %}
+                        {% if post.image %}
+                            <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
+                        {% endif %}
+                        <div class="post-content">
+                            <p>{{ post.content|truncatechars:150 }}</p>
+                        </div>
+                        <a href="{% url 'post_detail' post.id %}">Read More</a>
+                    </li>
+                {% empty %}
+                    <li>No posts found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Pagination -->
+        {% if author_posts.has_other_pages %}
+            {% include 'blog/pagination.html' with page_obj=author_posts %}
         {% endif %}
-    </div>
+    {% else %}
+        <p>{{ author.username }} hasn't created any posts yet.</p>
+    {% endif %}
+</div>
 </div>
 {% endblock %}
