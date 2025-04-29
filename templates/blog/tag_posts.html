@@ -1,22 +1,10 @@
-<!-- templates/blog/post_list.html (updated) -->
+<!-- templates/blog/tag_posts.html (new file) -->
 {% extends 'blog/base.html' %}
 
-{% block title %}Simple Blog{% endblock %}
+{% block title %}Posts tagged with "{{ tag.name }}" - Simple Blog{% endblock %}
 
 {% block content %}
-<h1>Blog Posts</h1>
-
-<!-- Add Tag Cloud -->
-{% if tags %}
-<div class="tag-cloud">
-    <h3>Tags</h3>
-    <div class="tags">
-        {% for tag in tags %}
-            <a href="{% url 'tag_posts' tag.slug %}" class="tag tag-size-{{ tag.posts.count|default:0|add:1 }}">{{ tag.name }}</a>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
+<h1>Posts tagged with "{{ tag.name }}"</h1>
 
 <div class="posts-grid">
     <ul>
@@ -47,7 +35,7 @@
             <a href="{% url 'post_detail' post.id %}">Read More</a>
         </li>
         {% empty %}
-        <li>No blog posts found.</li>
+        <li>No posts found with this tag.</li>
         {% endfor %}
     </ul>
 </div>

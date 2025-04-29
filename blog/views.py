@@ -1,43 +1,75 @@
 # blog/views.py
 
-from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Post, Category, UserProfile
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Count  # Use this instead of models.Count
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404, redirect
+
+from .forms import CommentForm
+from .forms import SearchForm
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserUpdateForm, PostForm
 from .models import Comment
-from .forms import CommentForm
-from django.db.models import Q
-from .forms import SearchForm
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import Post, Tag
 
 
-def post_list(request):
+def tag_posts(request, tag_slug):
     """
-    Displays a paginated list of all blog posts.
+    Display posts filtered by tag
     """
-    posts_list = Post.objects.all()
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    posts_list = Post.objects.filter(tags=tag)
 
-    # Set up pagination with 6 posts per page
+    # Set up pagination
     paginator = Paginator(posts_list, 6)  # Show 6 posts per page
     page = request.GET.get('page')
 
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page
         posts = paginator.page(1)
     except EmptyPage:
-        # If page is out of range, deliver last page of results
         posts = paginator.page(paginator.num_pages)
 
     context = {
-        'posts': posts
+        'posts': posts,
+        'tag': tag
+    }
+
+    return render(request, 'blog/tag_posts.html', context)
+
+
+def post_list(request):
+    """
+    Displays a paginated list of all blog posts with a limited tag cloud.
+    """
+    posts_list = Post.objects.all()
+
+    # Get the most used tags (limited to 20)
+    # This gets tags ordered by how many posts use them
+    tags = Tag.objects.annotate(
+        num_posts=Count('posts')  # Use Count directly, not models.Count
+    ).order_by('-num_posts')[:20]  # Limit to top 20 tags
+
+    # Set up pagination with 6 posts per page
+    paginator = Paginator(posts_list, 6)
+    page = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    context = {
+        'posts': posts,
+        'tags': tags
     }
     return render(request, 'blog/post_list.html', context)
-
 
 
 def post_detail(request, post_id):
@@ -74,12 +106,20 @@ def post_detail(request, post_id):
         else:
             comment_form = CommentForm()
 
+    # Get related posts by tags (up to 3)
+    related_posts = []
+    if post.tags.exists():
+        tag_ids = post.tags.values_list('id', flat=True)
+        related_posts = Post.objects.filter(tags__in=tag_ids).exclude(id=post.id).distinct()[:3]
+
     context = {
         'post': post,
         'comments': comments,
         'comment_form': comment_form,
+        'related_posts': related_posts,  # Add related posts based on tags
     }
     return render(request, 'blog/post_detail.html', context)
+
 
 
 @login_required
@@ -161,46 +201,6 @@ def user_logout(request):
     messages.success(request, 'You have been logged out.')
     return redirect('post_list')
 
-#
-# @login_required
-# def profile(request):
-#     """
-#     Display and update user profile with paginated posts.
-#     """
-#     if request.method == 'POST':
-#         user_form = UserUpdateForm(request.POST, instance=request.user)
-#         profile_form = UserProfileForm(request.POST, request.FILES, instance=request.user.profile)
-#
-#         if user_form.is_valid() and profile_form.is_valid():
-#             user_form.save()
-#             profile_form.save()
-#             messages.success(request, 'Your profile has been updated!')
-#             return redirect('profile')
-#     else:
-#         user_form = UserUpdateForm(instance=request.user)
-#         profile_form = UserProfileForm(instance=request.user.profile)
-#
-#     # Get user's posts with pagination
-#     user_posts_list = Post.objects.filter(author=request.user)
-#
-#     # Set up pagination
-#     paginator = Paginator(user_posts_list, 6)  # Show 6 posts per page
-#     page = request.GET.get('page')
-#
-#     try:
-#         user_posts = paginator.page(page)
-#     except PageNotAnInteger:
-#         user_posts = paginator.page(1)
-#     except EmptyPage:
-#         user_posts = paginator.page(paginator.num_pages)
-#
-#     context = {
-#         'user_form': user_form,
-#         'profile_form': profile_form,
-#         'user_posts': user_posts
-#     }
-#
-#     return render(request, 'blog/profile.html', context)
 
 
 @login_required
@@ -342,20 +342,22 @@ def author_profile(request, username):
     return render(request, 'blog/author_profile.html', context)
 
 
+
 def search_posts(request):
     """
-    Search for posts by title, content, or author username with pagination.
+    Search for posts by title, content, author username, or tags with pagination.
     """
     search_form = SearchForm(request.GET)
     query = request.GET.get('query', '')
     results_list = []
 
     if query:
-        # Search in title, content, and author's username
+        # Search in title, content, author's username, and tags
         results_list = Post.objects.filter(
             Q(title__icontains=query) |
             Q(content__icontains=query) |
-            Q(author__username__icontains=query)
+            Q(author__username__icontains=query) |
+            Q(tags__name__icontains=query)
         ).distinct()
 
     # Set up pagination
@@ -376,3 +378,5 @@ def search_posts(request):
     }
 
     return render(request, 'blog/search_results.html', context)
+
+

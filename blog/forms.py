@@ -1,8 +1,10 @@
+# blog/forms.py (updated)
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from .models import UserProfile, Post
-from .models import Comment
+from .models import UserProfile, Post, Comment, Tag  # Import Tag here
+from django.utils.text import slugify
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -47,13 +49,44 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
+    tags = forms.CharField(required=False,
+                           help_text="Enter tags separated by commas",
+                           widget=forms.TextInput(attrs={'placeholder': 'tag1, tag2, tag3'}))
+
     class Meta:
         model = Post
-        fields = ('title', 'content', 'category', 'image')
+        fields = ('title', 'content', 'category', 'image', 'tags')
         widgets = {
             'content': forms.Textarea(attrs={'rows': 8}),
         }
 
+    def clean_tags(self):
+        if self.cleaned_data['tags']:
+            return [tag.strip() for tag in self.cleaned_data['tags'].split(',')]
+        return []
+
+    def save(self, commit=True):
+        post = super().save(commit=False)
+
+        if commit:
+            post.save()
+
+            # Clear existing tags and add new ones
+            post.tags.clear()
+            tag_list = self.cleaned_data['tags']
+
+            if tag_list:
+                for tag_name in tag_list:
+                    if tag_name:
+                        # Create or get tag
+                        slug = slugify(tag_name)
+                        tag, created = Tag.objects.get_or_create(
+                            slug=slug,
+                            defaults={'name': tag_name}
+                        )
+                        post.tags.add(tag)
+
+        return post
 
 class CommentForm(forms.ModelForm):
     class Meta:

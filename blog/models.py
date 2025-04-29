@@ -15,6 +15,17 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
@@ -22,6 +33,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts', null=True)
+    tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
 
     class Meta:
         ordering = ['-pub_date']
@@ -75,3 +87,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.author.username} on {self.post.title}'
+
+
