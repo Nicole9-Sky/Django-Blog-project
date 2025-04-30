@@ -663,6 +663,30 @@ textarea {
 .tag-size-9 { font-size: 1.6em; }
 .tag-size-10 { font-size: 1.7em; }
 
+
+.reading-time {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f0f5ff;
+    color: #0056b3;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.reading-time:before {
+    margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+    .reading-time {
+        font-size: 0.8em;
+        padding: 3px 8px;
+    }
+}
+
 /* Footer */
 footer {
     margin-top: 40px;
