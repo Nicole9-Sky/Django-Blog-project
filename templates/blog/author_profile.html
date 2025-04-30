@@ -50,6 +50,7 @@
                             {% endfor %}
                         </p>
                          {% endif %}
+                        <p class="post-meta reading-time">📚 {{ post.get_reading_time }} min read</p>
                         {% if post.image %}
                             <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
                         {% endif %}

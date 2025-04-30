@@ -48,6 +48,20 @@ class Post(models.Model):
             return self.image.url
         return None # Or a default image URL
 
+    def get_reading_time(self):
+        """
+        Calculate the reading time based on word count.
+        Average reading speed: 200 words per minute.
+        """
+        word_count = len(self.content.split())
+        reading_time_min = round(word_count / 200)
+
+        # Ensure the reading time is at least 1 minute
+        if reading_time_min < 1:
+            reading_time_min = 1
+
+        return reading_time_min
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')

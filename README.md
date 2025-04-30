@@ -37,6 +37,7 @@ It's designed to be easy to understand and extend, making it a great starting po
 - 🏷️ Tag system for organizing and discovering related content
 - 🎨 Clean, minimal, and responsive design with a two-column layout
 - 📱 Mobile-friendly interface for reading on any device
+- ⏱️ Reading time estimator for each post
 
 ### User Authentication
 - ✅ Register new accounts with email verification
@@ -60,6 +61,12 @@ It's designed to be easy to understand and extend, making it a great starting po
 - 🔄 Related posts suggestion based on shared tags
 - 📊 Tag cloud visualization with size based on popularity
 - 🔠 Easy-to-use comma-separated tag input when creating/editing posts
+
+### Reading Time Estimator
+- ⏱️ Automatically calculates and displays reading time for each post
+- 📚 Based on word count and average reading speed
+- 🧠 Helps users decide whether they have time to read a post
+- 📊 Displays the estimated time prominently on both list and detail views
 
 ### Search Functionality
 - 🔍 Search for posts by title, content, author name, or tags
@@ -171,6 +178,15 @@ The tag system allows for more granular content organization:
 4. Click on any tag to see all posts with that tag
 5. Related posts with similar tags appear on the post detail page
 
+### Reading Time Feature
+
+The blog automatically calculates reading time for all posts:
+
+1. Reading time is calculated based on word count and an average reading speed of 200 words per minute
+2. The time is displayed prominently on both post listings and detail pages
+3. This feature helps readers quickly assess how much time they'll need to read a post
+4. The calculation ensures a minimum of 1 minute reading time for very short posts
+
 ### Comment Moderation
 
 By default, all comments require approval before being displayed:
@@ -248,6 +264,11 @@ This project provides a solid starting point. Here are some ideas for future dev
 - 🗳️ User voting/rating system for posts
 - 🎯 Featured or sticky posts
 - 📅 Editorial calendar for content planning
+- 🌓 Dark mode toggle for better reading experience
+- 🌍 Internationalization and multiple language support
+- 📊 Reading progress bar for long posts
+- 📥 Bookmark posts for later reading
+- 📑 Table of contents for longer articles
 
 ## 📜 License
 
