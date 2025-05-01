@@ -6,22 +6,24 @@
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
 
 </div>
 
 <div align="center">
   <img src="screenshot_.png" alt="Django Blog Platform Screenshot" width="800px"/>
-  <p><em>screenshot of the project</em></p>
+  <p><em>Modern Django blog platform with dark mode support</em></p>
 </div>
 
 ## 📜 Overview
 
-A feature-rich, production-ready blog platform built with the Django web framework. This project demonstrates advanced Django concepts and best practices, including optimized database queries, AJAX integration, user authentication, social interactions, and responsive design patterns.
+A feature-rich, production-ready blog platform built with the Django web framework. This project demonstrates advanced Django concepts and best practices, including optimized database queries, AJAX integration, user authentication, social interactions, responsive design patterns, and a modern dark mode interface.
 
-The platform includes a comprehensive set of features typically found in modern blogging systems: user authentication with profiles, full CRUD functionality for posts, a moderated commenting system with nested replies, real-time like/unlike functionality, a powerful tag system for content organization, and intelligent search capabilities. Performance optimizations ensure efficient database operations even as the content scales.
+The platform includes a comprehensive set of features typically found in modern blogging systems: user authentication with profiles, full CRUD functionality for posts, a moderated commenting system with nested replies, real-time like/unlike functionality, a powerful tag system for content organization, intelligent search capabilities, and an elegant dark mode toggle for improved accessibility and reading comfort.
 
 While maintaining clean, well-documented code that's easy to understand and extend, this blog platform showcases professional Django development skills and serves as an excellent portfolio piece or foundation for more complex applications.
+
 ## ✨ Features
 
 ### Core Features
@@ -38,6 +40,16 @@ While maintaining clean, well-documented code that's easy to understand and exte
 - 🎨 Clean, minimal, and responsive design with a two-column layout
 - 📱 Mobile-friendly interface for reading on any device
 - ⏱️ Reading time estimator for each post
+- 🌓 **Dark Mode Toggle with persistent user preference**
+
+### Dark Mode Feature
+- 🌗 Seamless toggle between light and dark themes
+- 💾 Theme preference saved in localStorage
+- 🎨 CSS variables for consistent theming
+- 🔄 Smooth transitions when switching themes
+- 📱 Respects system dark mode preferences
+- 👁️ Reduced eye strain for night reading
+- ♿ Improved accessibility
 
 ### User Authentication
 - ✅ Register new accounts with email verification
@@ -97,7 +109,6 @@ While maintaining clean, well-documented code that's easy to understand and exte
 - 📱 Responsive design that works on all device sizes
 - 🧩 Consistent implementation across all listing views (blog list, profiles, search)
 
-
 ## 🛠️ Technologies Used
 
 - **Backend**: Django (Python Web Framework)
@@ -106,6 +117,8 @@ While maintaining clean, well-documented code that's easy to understand and exte
 - **Image Handling**: Pillow (Python Imaging Library)
 - **Authentication**: Django's built-in auth system with custom extensions
 - **AJAX**: Fetch API for asynchronous requests (like system)
+- **Icons**: Font Awesome for UI icons
+- **Theme**: CSS Variables for dark mode implementation
 
 ## 🚀 Setup and Installation
 
@@ -177,6 +190,16 @@ To populate the blog with content:
 4. Assign a category and upload an image (optional)
 5. Add tags to your post (comma-separated, e.g., "django, tutorial, web-development")
 6. View your published content on the main site or your profile page
+
+### Using the Dark Mode Feature
+
+The blog includes a sophisticated dark mode system:
+
+1. Click the moon/sun icon in the header to toggle between light and dark modes
+2. Your theme preference is automatically saved and persists across sessions
+3. The system respects your operating system's dark mode setting by default
+4. All UI elements, including cards, buttons, and text, adapt to the selected theme
+5. Transitions between themes are smooth and visually appealing
 
 ### Using Tags
 
@@ -263,8 +286,10 @@ Simple-Django-Blog/
 │       ├── comment_confirm_delete.html # Confirmation for comment deletion
 │       └── search_results.html # Display search results
 ├── static/                  # Project-level static files directory
-│   └── css/
-│       └── style.css        # Custom CSS for styling
+│   ├── css/
+│   │   └── style.css        # Custom CSS with CSS variables for theming
+│   └── js/
+│       └── theme.js         # JavaScript for dark mode toggle
 ├── media/                   # Directory for user-uploaded media files
 │   ├── blog_images/         # Blog post images
 │   └── profile_pics/        # User profile pictures
@@ -291,11 +316,11 @@ This project provides a solid starting point. Here are some ideas for future dev
 - 🗳️ User voting/rating system for posts
 - 🎯 Featured or sticky posts
 - 📅 Editorial calendar for content planning
-- 🌓 Dark mode toggle for better reading experience
 - 🌍 Internationalization and multiple language support
 - 📊 Reading progress bar for long posts
 - 📥 Bookmark posts for later reading
 - 📑 Table of contents for longer articles
+- ✅ **Dark mode toggle (Implemented!)**
 
 ## 📜 License
 

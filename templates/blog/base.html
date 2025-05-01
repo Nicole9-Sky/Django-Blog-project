@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Django Blog{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -21,6 +23,12 @@
                         <button type="submit" class="search-btn">Search</button>
                     </form>
                 </div>
+
+                <!-- Dark mode toggle button -->
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
 
                 <nav class="main-nav">
                     <ul>
@@ -56,5 +64,8 @@
             <p>&copy; {% now "Y" %} Simple Blog. All rights reserved.</p>
         </footer>
     </div>
+
+    <!-- Theme switcher script -->
+    <script src="{% static 'js/theme.js' %}"></script>
 </body>
 </html>
