@@ -36,6 +36,16 @@
         {{ post.content|linebreaksbr }}
     </div>
 
+    <!-- Like section for post -->
+    <div class="post-likes">
+        <button class="like-btn {% if post.liked_by_user %}liked{% endif %}"
+                data-post-id="{{ post.id }}"
+                data-url="{% url 'like_post' post.id %}">
+            <span class="like-icon">❤️</span>
+            <span class="like-count">{{ post.get_likes_count }}</span>
+        </button>
+    </div>
+
     {% if user.is_authenticated and post.author == user %}
     <div class="post-actions">
         <a href="{% url 'update_post' post.id %}" class="btn">Edit Post</a>
@@ -86,6 +96,14 @@
                             {% if user == comment.author or user.is_staff %}
                                 <a href="{% url 'delete_comment' comment.id %}" class="btn-small btn-danger">Delete</a>
                             {% endif %}
+
+                            <!-- Like button for comments -->
+                            <button class="like-btn {% if comment.liked_by_user %}liked{% endif %}"
+                                    data-comment-id="{{ comment.id }}"
+                                    data-url="{% url 'like_comment' comment.id %}">
+                                <span class="like-icon">❤️</span>
+                                <span class="like-count">{{ comment.get_likes_count }}</span>
+                            </button>
                         </div>
 
                         <!-- Replies to this comment -->
@@ -103,6 +121,14 @@
                                         {% if user == reply.author or user.is_staff %}
                                             <a href="{% url 'delete_comment' reply.id %}" class="btn-small btn-danger">Delete</a>
                                         {% endif %}
+
+                                        <!-- Like button for replies -->
+                                        <button class="like-btn {% if reply.liked_by_user %}liked{% endif %}"
+                                                data-comment-id="{{ reply.id }}"
+                                                data-url="{% url 'like_comment' reply.id %}">
+                                            <span class="like-icon">❤️</span>
+                                            <span class="like-count">{{ reply.get_likes_count }}</span>
+                                        </button>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -155,5 +181,52 @@ function cancelReply() {
     // Remove the cancel button
     document.getElementById('cancel-reply').remove();
 }
+</script>
+
+<!-- JavaScript for the like functionality -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Select all like buttons
+    const likeButtons = document.querySelectorAll('.like-btn');
+
+    // Add click event listener to each button
+    likeButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Check if user is authenticated
+            {% if user.is_authenticated %}
+                const url = this.getAttribute('data-url');
+                const likeCount = this.querySelector('.like-count');
+
+                // Send AJAX request
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Update like count
+                    likeCount.textContent = data.like_count;
+
+                    // Toggle liked class
+                    if (data.liked) {
+                        this.classList.add('liked');
+                    } else {
+                        this.classList.remove('liked');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            {% else %}
+                // Redirect to login page if user is not authenticated
+                window.location.href = "{% url 'login' %}?next={{ request.path }}";
+            {% endif %}
+        });
+    });
+});
 </script>
 {% endblock %}

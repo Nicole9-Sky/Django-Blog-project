@@ -1,4 +1,4 @@
-<!-- templates/blog/tag_posts.html (new file) -->
+<!-- templates/blog/tag_posts.html -->
 {% extends 'blog/base.html' %}
 
 {% block title %}Posts tagged with "{{ tag.name }}" - Simple Blog{% endblock %}
@@ -26,7 +26,10 @@
                     {% endfor %}
                 </p>
             {% endif %}
-            <p class="post-meta reading-time">📚 {{ post.get_reading_time }} min read</p>
+            <div class="post-meta-stats">
+                <p class="post-meta reading-time">📚 {{ post.get_reading_time }} min read</p>
+                <p class="post-meta likes-count">❤️ {{ post.likes_count }} likes</p>
+            </div>
             {% if post.image %}
                 <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
             {% endif %}

@@ -62,6 +62,12 @@ class Post(models.Model):
 
         return reading_time_min
 
+    def get_likes_count(self):
+        return self.likes.count()
+
+    def is_liked_by(self, user):
+        return self.likes.filter(user=user).exists()
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
@@ -101,5 +107,39 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.author.username} on {self.post.title}'
+
+    def get_likes_count(self):
+        return self.likes.count()
+
+    def is_liked_by(self, user):
+        return self.likes.filter(user=user).exists()
+
+
+# blog/models.py (add to existing file)
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes', blank=True, null=True)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='likes', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        # Ensure a user can like a post or comment only once
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'post'],
+                condition=models.Q(post__isnull=False),
+                name='unique_user_post_like'
+            ),
+            models.UniqueConstraint(
+                fields=['user', 'comment'],
+                condition=models.Q(comment__isnull=False),
+                name='unique_user_comment_like'
+            ),
+        ]
+
+    def __str__(self):
+        target = self.post.title if self.post else self.comment.content[:30]
+        return f"{self.user.username} likes {target}"
 
 
