@@ -122,8 +122,8 @@ Follow these steps to get the Simple Django Blog Platform running on your local 
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/ffiruzi/Simple-Django-Blog.git
-cd Simple-Django-Blog
+git clone https://github.com/ffiruzi/Django-Blog-Platform.git
+cd Django-Blog-Platform
 ```
 
 #### 2. Set up a Virtual Environment
