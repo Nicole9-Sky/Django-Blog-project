@@ -22,14 +22,14 @@
             {% endif %}
         </div>
     </div>
-    
+
     {% if author.profile.bio %}
         <div class="profile-bio">
             <h3>Bio</h3>
             <p>{{ author.profile.bio }}</p>
         </div>
     {% endif %}
-    
+
     <div class="author-posts">
     <h3>Posts by {{ author.username }}</h3>
     {% if author_posts %}
@@ -50,7 +50,10 @@
                             {% endfor %}
                         </p>
                          {% endif %}
-                        <p class="post-meta reading-time">📚 {{ post.get_reading_time }} min read</p>
+                        <div class="post-meta-stats">
+                            <p class="post-meta reading-time">📚 {{ post.get_reading_time }} min read</p>
+                            <p class="post-meta likes-count">❤️ {{ post.likes_count }} likes</p>
+                        </div>
                         {% if post.image %}
                             <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
                         {% endif %}

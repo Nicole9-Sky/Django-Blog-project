@@ -14,14 +14,20 @@ from .forms import SearchForm
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserUpdateForm, PostForm
 from .models import Comment
 from .models import Post, Tag
+from django.http import JsonResponse
+from .models import Like
+
 
 
 def tag_posts(request, tag_slug):
     """
     Display posts filtered by tag
     """
+    from django.db.models import Count
+
     tag = get_object_or_404(Tag, slug=tag_slug)
-    posts_list = Post.objects.filter(tags=tag)
+    # Annotate with like counts
+    posts_list = Post.objects.filter(tags=tag).annotate(likes_count=Count('likes')).order_by('-pub_date')
 
     # Set up pagination
     paginator = Paginator(posts_list, 6)  # Show 6 posts per page
@@ -46,12 +52,14 @@ def post_list(request):
     """
     Displays a paginated list of all blog posts with a limited tag cloud.
     """
-    posts_list = Post.objects.all()
+    from django.db.models import Count
+
+    # Annotate posts with like counts for better performance
+    posts_list = Post.objects.annotate(likes_count=Count('likes')).order_by('-pub_date')
 
     # Get the most used tags (limited to 20)
-    # This gets tags ordered by how many posts use them
     tags = Tag.objects.annotate(
-        num_posts=Count('posts')  # Use Count directly, not models.Count
+        num_posts=Count('posts')
     ).order_by('-num_posts')[:20]  # Limit to top 20 tags
 
     # Set up pagination with 6 posts per page
@@ -78,8 +86,27 @@ def post_detail(request, post_id):
     """
     post = get_object_or_404(Post, pk=post_id)
 
+    # Add a liked_by_user property to the post
+    if request.user.is_authenticated:
+        post.liked_by_user = post.likes.filter(user=request.user).exists()
+    else:
+        post.liked_by_user = False
+
     # Only get approved comments
     comments = post.comments.filter(parent=None, is_approved=True)
+
+    # Add a liked_by_user property to each comment and reply
+    if request.user.is_authenticated:
+        for comment in comments:
+            comment.liked_by_user = comment.likes.filter(user=request.user).exists()
+            for reply in comment.replies.all():
+                reply.liked_by_user = reply.likes.filter(user=request.user).exists()
+    else:
+        for comment in comments:
+            comment.liked_by_user = False
+            for reply in comment.replies.all():
+                reply.liked_by_user = False
+
     new_comment = None
     comment_form = None
 
@@ -311,35 +338,63 @@ def delete_post(request, post_id):
     return render(request, 'blog/post_confirm_delete.html', {'post': post})
 
 
-def author_profile(request, username):
+@login_required
+def like_post(request, post_id):
     """
-    View another user's profile and posts with pagination.
+    Toggle like status for a post
     """
-    author = get_object_or_404(User, username=username)
+    post = get_object_or_404(Post, pk=post_id)
+    like, created = Like.objects.get_or_create(
+        user=request.user,
+        post=post,
+        defaults={'comment': None}
+    )
 
-    # Make sure we're filtering correctly by author
-    author_posts_list = Post.objects.filter(author=author)
+    # If not created, it means the like already existed, so we remove it
+    if not created:
+        like.delete()
+        liked = False
+    else:
+        liked = True
 
-    # Debug: Add this temporarily
-    print(f"Found {author_posts_list.count()} posts for {username}")
+    # Get updated count
+    like_count = post.likes.count()
 
-    # Set up pagination
-    paginator = Paginator(author_posts_list, 6)  # Show 6 posts per page
-    page = request.GET.get('page')
+    # Return JSON response
+    return JsonResponse({
+        'liked': liked,
+        'like_count': like_count
+    })
 
-    try:
-        author_posts = paginator.page(page)
-    except PageNotAnInteger:
-        author_posts = paginator.page(1)
-    except EmptyPage:
-        author_posts = paginator.page(paginator.num_pages)
 
-    context = {
-        'author': author,
-        'author_posts': author_posts
-    }
+@login_required
+def like_comment(request, comment_id):
+    """
+    Toggle like status for a comment
+    """
+    comment = get_object_or_404(Comment, pk=comment_id)
+    like, created = Like.objects.get_or_create(
+        user=request.user,
+        comment=comment,
+        defaults={'post': None}
+    )
 
-    return render(request, 'blog/author_profile.html', context)
+    # If not created, it means the like already existed, so we remove it
+    if not created:
+        like.delete()
+        liked = False
+    else:
+        liked = True
+
+    # Get updated count
+    like_count = comment.likes.count()
+
+    # Return JSON response
+    return JsonResponse({
+        'liked': liked,
+        'like_count': like_count
+    })
+
 
 
 
@@ -347,18 +402,21 @@ def search_posts(request):
     """
     Search for posts by title, content, author username, or tags with pagination.
     """
+    from django.db.models import Count
+
     search_form = SearchForm(request.GET)
     query = request.GET.get('query', '')
     results_list = []
 
     if query:
         # Search in title, content, author's username, and tags
+        # And annotate with like counts
         results_list = Post.objects.filter(
             Q(title__icontains=query) |
             Q(content__icontains=query) |
             Q(author__username__icontains=query) |
             Q(tags__name__icontains=query)
-        ).distinct()
+        ).distinct().annotate(likes_count=Count('likes')).order_by('-pub_date')
 
     # Set up pagination
     paginator = Paginator(results_list, 6)  # Show 6 results per page
@@ -378,5 +436,35 @@ def search_posts(request):
     }
 
     return render(request, 'blog/search_results.html', context)
+
+
+def author_profile(request, username):
+    """
+    View another user's profile and posts with pagination.
+    """
+    from django.db.models import Count
+
+    author = get_object_or_404(User, username=username)
+
+    # Make sure we're filtering correctly by author and annotating with like counts
+    author_posts_list = Post.objects.filter(author=author).annotate(likes_count=Count('likes')).order_by('-pub_date')
+
+    # Set up pagination
+    paginator = Paginator(author_posts_list, 6)  # Show 6 posts per page
+    page = request.GET.get('page')
+
+    try:
+        author_posts = paginator.page(page)
+    except PageNotAnInteger:
+        author_posts = paginator.page(1)
+    except EmptyPage:
+        author_posts = paginator.page(paginator.num_pages)
+
+    context = {
+        'author': author,
+        'author_posts': author_posts
+    }
+
+    return render(request, 'blog/author_profile.html', context)
 
 

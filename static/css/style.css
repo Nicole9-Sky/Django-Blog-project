@@ -687,6 +687,79 @@ textarea {
     }
 }
 
+/* Like button styling */
+.like-btn {
+    background: none;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    color: #6c757d;
+}
+
+.like-btn:hover {
+    background-color: #f1f1f1;
+}
+
+.like-btn.liked {
+    color: #e41b17;
+}
+
+.like-btn.liked .like-icon {
+    transform: scale(1.2);
+}
+
+.like-icon {
+    transition: transform 0.2s ease;
+    font-size: 16px;
+}
+
+.like-count {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.post-likes {
+    margin: 15px 0;
+}
+
+
+
+
+
+/* Stats container for reading time and likes */
+.post-meta-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+/* Likes count styling */
+.likes-count {
+    display: inline-flex;
+    align-items: center;
+    color: #e41b17;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    background-color: rgba(228, 27, 23, 0.1);
+    margin: 0;
+}
+
+/* Reading time styling to match likes-count */
+.reading-time {
+    margin: 0;
+    background-color: rgba(0, 123, 255, 0.1);
+    border-radius: 20px;
+}
+
+
+
 /* Footer */
 footer {
     margin-top: 40px;
