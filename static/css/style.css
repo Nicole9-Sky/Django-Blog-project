@@ -1,20 +1,120 @@
+/* CSS Variables for theming */
+:root {
+    --bg-color: #f4f4f4;
+    --container-bg: #fff;
+    --text-color: #333;
+    --text-color-light: #666;
+    --text-color-muted: #6c757d;
+    --link-color: #007bff;
+    --link-hover-color: #0056b3;
+    --border-color: #ddd;
+    --border-color-light: #eee;
+    --heading-color: #333;
+    --input-bg: #fff;
+    --input-border: #ddd;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --code-bg: #f8f9fa;
+    --success-bg: #d4edda;
+    --success-color: #155724;
+    --success-border: #c3e6cb;
+    --error-bg: #f8d7da;
+    --error-color: #721c24;
+    --error-border: #f5c6cb;
+    --warning-bg: #fff3cd;
+    --warning-color: #856404;
+    --warning-border: #ffeeba;
+    --info-bg: #d1ecf1;
+    --info-color: #0c5460;
+    --info-border: #bee5eb;
+    --btn-primary-bg: #007bff;
+    --btn-primary-hover: #0056b3;
+    --btn-secondary-bg: #6c757d;
+    --btn-secondary-hover: #5a6268;
+    --btn-danger-bg: #dc3545;
+    --btn-danger-hover: #c82333;
+    --tag-bg: #e9ecef;
+    --tag-color: #495057;
+    --comment-bg: #fff;
+    --comment-reply-bg: #f8f9fa;
+    --profile-placeholder-bg: #e9ecef;
+    --like-icon-color: #6c757d;
+    --like-icon-active: #e41b17;
+    --reading-time-bg: #f0f5ff;
+    --reading-time-color: #0056b3;
+    --likes-count-bg: rgba(228, 27, 23, 0.1);
+    --likes-count-color: #e41b17;
+    --hover-bg: #f1f1f1;
+    --auth-form-bg: #f9f9f9;
+}
+
+/* Dark mode variables */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --container-bg: #2d2d2d;
+    --text-color: #e4e4e4;
+    --text-color-light: #b0b0b0;
+    --text-color-muted: #9a9a9a;
+    --link-color: #4dabf7;
+    --link-hover-color: #339af0;
+    --border-color: #404040;
+    --border-color-light: #3a3a3a;
+    --heading-color: #f0f0f0;
+    --input-bg: #333;
+    --input-border: #555;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --code-bg: #333;
+    --success-bg: #1f4e3a;
+    --success-color: #75d3a7;
+    --success-border: #2b6a4e;
+    --error-bg: #4a1f24;
+    --error-color: #f5a3ab;
+    --error-border: #682a31;
+    --warning-bg: #4a3f1f;
+    --warning-color: #ffdd9e;
+    --warning-border: #6b5a2e;
+    --info-bg: #1f3a4a;
+    --info-color: #7fc8e2;
+    --info-border: #2e5568;
+    --btn-primary-bg: #0066cc;
+    --btn-primary-hover: #0052a3;
+    --btn-secondary-bg: #545b62;
+    --btn-secondary-hover: #484e53;
+    --btn-danger-bg: #c82333;
+    --btn-danger-hover: #bd2130;
+    --tag-bg: #3a3a3a;
+    --tag-color: #d4d4d4;
+    --comment-bg: #2d2d2d;
+    --comment-reply-bg: #333;
+    --profile-placeholder-bg: #404040;
+    --like-icon-color: #9a9a9a;
+    --like-icon-active: #ff4d4d;
+    --reading-time-bg: rgba(77, 171, 247, 0.1);
+    --reading-time-color: #4dabf7;
+    --likes-count-bg: rgba(255, 77, 77, 0.1);
+    --likes-count-color: #ff4d4d;
+    --hover-bg: #404040;
+    --auth-form-bg: #333;
+}
+
 /* Basic body and overall container styling */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
     max-width: 1000px;
     margin: 20px auto;
-    background: #fff;
+    background: var(--container-bg);
     padding: 20px 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px var(--shadow-color);
     border-radius: 8px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Updated header and navigation */
@@ -24,7 +124,7 @@ header {
     align-items: center;
     padding-bottom: 20px;
     margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color-light);
     flex-wrap: nowrap;
 }
 
@@ -47,7 +147,7 @@ header {
 }
 
 .site-title a {
-    color: #007bff;
+    color: var(--link-color);
     text-decoration: none;
 }
 
@@ -62,31 +162,64 @@ header {
     align-items: center;
 }
 
-/* Update the search input styles to add spacing */
 .search-input {
     padding: 6px 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;  /* Changed from 4px 0 0 4px to make it fully rounded */
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
     width: 180px;
     font-size: 14px;
     height: 34px;
-    margin-right: 5px;  /* Add margin to create spacing */
+    margin-right: 5px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
 }
 
-/* Update the search button styles to make it fully rounded */
 .search-btn {
-    background-color: #007bff;
+    background-color: var(--btn-primary-bg);
     color: white;
     border: none;
     padding: 6px 12px;
-    border-radius: 4px;  /* Changed from 0 4px 4px 0 to make it fully rounded */
+    border-radius: 4px;
     cursor: pointer;
     height: 34px;
     font-size: 14px;
 }
 
 .search-btn:hover {
-    background-color: #0056b3;
+    background-color: var(--btn-primary-hover);
+}
+
+/* Dark mode toggle button */
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 20px;
+    color: var(--text-color);
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+.theme-toggle:hover {
+    background-color: var(--tag-bg);
+}
+
+.theme-toggle i {
+    display: none;
+}
+
+.theme-toggle .fa-moon {
+    display: inline-block;
+}
+
+[data-theme="dark"] .theme-toggle .fa-moon {
+    display: none;
+}
+
+[data-theme="dark"] .theme-toggle .fa-sun {
+    display: inline-block;
 }
 
 /* Main navigation */
@@ -108,7 +241,7 @@ header {
 
 .main-nav a {
     text-decoration: none;
-    color: #333;
+    color: var(--text-color);
     font-weight: bold;
     padding: 5px 8px;
     border-radius: 4px;
@@ -118,22 +251,22 @@ header {
 }
 
 .main-nav a:hover {
-    background-color: #007bff;
+    background-color: var(--btn-primary-bg);
     color: white;
 }
 
 /* Headings and links */
 h1, h2, h3 {
-    color: #333;
+    color: var(--heading-color);
     margin-bottom: 10px;
 }
 
 h1 {
-    color: #007bff; /* A touch of color */
+    color: var(--link-color);
 }
 
 a {
-    color: #007bff;
+    color: var(--link-color);
     text-decoration: none;
 }
 
@@ -153,27 +286,27 @@ a:hover {
 }
 
 .success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+    background-color: var(--success-bg);
+    color: var(--success-color);
+    border: 1px solid var(--success-border);
 }
 
 .error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    background-color: var(--error-bg);
+    color: var(--error-color);
+    border: 1px solid var(--error-border);
 }
 
 .warning {
-    background-color: #fff3cd;
-    color: #856404;
-    border: 1px solid #ffeeba;
+    background-color: var(--warning-bg);
+    color: var(--warning-color);
+    border: 1px solid var(--warning-border);
 }
 
 .info {
-    background-color: #d1ecf1;
-    color: #0c5460;
-    border: 1px solid #bee5eb;
+    background-color: var(--info-bg);
+    color: var(--info-color);
+    border: 1px solid var(--info-border);
 }
 
 /* Forms */
@@ -190,9 +323,11 @@ label {
 input, textarea, select {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--input-border);
     border-radius: 4px;
     font-size: 16px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
 }
 
 textarea {
@@ -200,14 +335,14 @@ textarea {
 }
 
 .form-text {
-    color: #666;
+    color: var(--text-color-light);
     font-size: 0.85em;
     margin-top: 5px;
     display: block;
 }
 
 .error-message {
-    color: #721c24;
+    color: var(--error-color);
     margin-top: 5px;
     font-size: 0.85em;
 }
@@ -216,7 +351,7 @@ textarea {
 .btn, button[type="submit"] {
     display: inline-block;
     padding: 8px 16px;
-    background-color: #007bff;
+    background-color: var(--btn-primary-bg);
     color: white;
     border: none;
     border-radius: 4px;
@@ -227,24 +362,24 @@ textarea {
 }
 
 .btn:hover, button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: var(--btn-primary-hover);
     text-decoration: none;
 }
 
 .btn-secondary {
-    background-color: #6c757d;
+    background-color: var(--btn-secondary-bg);
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268;
+    background-color: var(--btn-secondary-hover);
 }
 
 .btn-danger {
-    background-color: #dc3545;
+    background-color: var(--btn-danger-bg);
 }
 
 .btn-danger:hover {
-    background-color: #c82333;
+    background-color: var(--btn-danger-hover);
 }
 
 .btn-small {
@@ -257,9 +392,9 @@ textarea {
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    background-color: #f9f9f9;
+    background-color: var(--auth-form-bg);
 }
 
 .auth-form h2 {
@@ -271,7 +406,7 @@ textarea {
     text-align: center;
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--border-color);
 }
 
 /* Profile pages */
@@ -291,7 +426,7 @@ textarea {
     border-radius: 50%;
     overflow: hidden;
     margin-right: 20px;
-    background-color: #e9ecef;
+    background-color: var(--profile-placeholder-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -305,7 +440,7 @@ textarea {
 
 .profile-avatar-placeholder {
     font-size: 48px;
-    color: #6c757d;
+    color: var(--text-color-muted);
 }
 
 .profile-info {
@@ -323,7 +458,7 @@ textarea {
 .profile-bio {
     margin-bottom: 30px;
     padding: 15px;
-    background-color: #f8f9fa;
+    background-color: var(--code-bg);
     border-radius: 8px;
 }
 
@@ -359,7 +494,7 @@ textarea {
     margin: 0 auto;
     text-align: center;
     padding: 20px;
-    background-color: #f8f9fa;
+    background-color: var(--code-bg);
     border-radius: 8px;
 }
 
@@ -372,29 +507,25 @@ textarea {
 /* Style for the list of posts on the homepage (grid layout) */
 .posts-grid {
     display: grid;
-    /* Create 2 columns with equal width */
     grid-template-columns: 1fr 1fr;
-    /* Gap between grid items */
     gap: 30px;
     margin-top: 20px;
 }
 
-/* Remove default list styling */
 .posts-grid ul {
-     list-style: none;
-     padding: 0;
-     margin: 0;
-     display: contents;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: contents;
 }
 
-/* Style the individual list items (blog post cards) */
 .posts-grid li {
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     padding: 15px;
     margin-bottom: 0;
     border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: var(--container-bg);
+    box-shadow: 0 2px 4px var(--shadow-color);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -403,13 +534,13 @@ textarea {
 
 .posts-grid li:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 .posts-grid li:last-child {
-     border-bottom: 1px solid #ddd;
-     margin-bottom: 0;
-     padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 0;
+    padding-bottom: 15px;
 }
 
 .posts-grid li h2 {
@@ -421,10 +552,9 @@ textarea {
 .posts-grid li .post-meta {
     margin-bottom: 10px;
     font-size: 0.85em;
-    color: #555;
+    color: var(--text-color-muted);
 }
 
-/* Styling for the post image within the grid item */
 .posts-grid li .post-image {
     width: 100%;
     height: 180px;
@@ -434,7 +564,6 @@ textarea {
     display: block;
 }
 
-/* Styling for the post content snippet in the grid item */
 .posts-grid li .post-content {
     margin-top: 0;
     margin-bottom: 15px;
@@ -443,7 +572,6 @@ textarea {
     text-overflow: ellipsis;
 }
 
-/* Style for the "Read More" link */
 .posts-grid li a:last-child {
     display: inline-block;
     margin-top: auto;
@@ -453,13 +581,13 @@ textarea {
 /* Styling for the Post Detail page */
 .post-detail h1 {
     text-align: left;
-    color: #333;
+    color: var(--heading-color);
     margin-bottom: 5px;
 }
 
 .post-detail .post-meta {
     font-size: 0.9em;
-    color: #666;
+    color: var(--text-color-light);
     margin-bottom: 20px;
     display: block;
 }
@@ -484,7 +612,7 @@ textarea {
 /* Comment styling */
 .comments-section {
     margin-top: 40px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--border-color-light);
     padding-top: 20px;
 }
 
@@ -495,7 +623,7 @@ textarea {
 .comment-form {
     margin-bottom: 30px;
     padding: 20px;
-    background-color: #f8f9fa;
+    background-color: var(--code-bg);
     border-radius: 8px;
 }
 
@@ -506,9 +634,9 @@ textarea {
 .comment {
     padding: 15px;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    background-color: #fff;
+    background-color: var(--comment-bg);
 }
 
 .comment-header {
@@ -516,16 +644,16 @@ textarea {
     justify-content: space-between;
     margin-bottom: 10px;
     padding-bottom: 5px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color-light);
 }
 
 .comment-author {
     font-weight: bold;
-    color: #007bff;
+    color: var(--link-color);
 }
 
 .comment-date {
-    color: #6c757d;
+    color: var(--text-color-muted);
     font-size: 0.85em;
 }
 
@@ -542,14 +670,14 @@ textarea {
 .comment-replies {
     margin-top: 15px;
     margin-left: 30px;
-    border-left: 2px solid #eee;
+    border-left: 2px solid var(--border-color-light);
     padding-left: 15px;
 }
 
 .comment.reply {
     margin-bottom: 10px;
     border: none;
-    background-color: #f8f9fa;
+    background-color: var(--comment-reply-bg);
     padding: 10px;
 }
 
@@ -557,9 +685,9 @@ textarea {
 .comment-preview {
     margin: 20px 0;
     padding: 15px;
-    background-color: #f8f9fa;
+    background-color: var(--code-bg);
     border-radius: 4px;
-    border-left: 3px solid #007bff;
+    border-left: 3px solid var(--link-color);
 }
 
 /* Search results page */
@@ -569,7 +697,7 @@ textarea {
 
 .search-results h2 {
     margin: 20px 0;
-    color: #007bff;
+    color: var(--link-color);
 }
 
 .pagination {
@@ -579,52 +707,41 @@ textarea {
 
 .pagination .step-links {
     display: inline-block;
-    background-color: #f8f9fa;
+    background-color: var(--code-bg);
     padding: 8px 15px;
     border-radius: 25px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 .pagination .current-page {
     display: inline-block;
     padding: 5px 12px;
     margin: 0 10px;
-    background-color: #fff;
+    background-color: var(--container-bg);
     border-radius: 20px;
-    border: 1px solid #dee2e6;
+    border: 1px solid var(--border-color);
     font-weight: bold;
-    color: #007bff;
+    color: var(--link-color);
 }
 
 .pagination a.btn-small {
-    background-color: #fff;
-    color: #007bff;
-    border: 1px solid #dee2e6;
+    background-color: var(--container-bg);
+    color: var(--link-color);
+    border: 1px solid var(--border-color);
     transition: all 0.3s;
 }
 
 .pagination a.btn-small:hover {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-}
-
-@media (max-width: 576px) {
-    .pagination .current-page {
-        margin: 0 5px;
-    }
-
-    .pagination a.btn-small {
-        padding: 4px 8px;
-        font-size: 12px;
-    }
+    background-color: var(--btn-primary-bg);
+    color: white;
+    border-color: var(--btn-primary-bg);
 }
 
 /* Tag styling */
 .tag-cloud {
     margin: 20px 0 30px;
     padding: 15px;
-    background-color: #f8f9fa;
+    background-color: var(--code-bg);
     border-radius: 8px;
 }
 
@@ -636,8 +753,8 @@ textarea {
 
 .tag {
     display: inline-block;
-    background-color: #e9ecef;
-    color: #495057;
+    background-color: var(--tag-bg);
+    color: var(--tag-color);
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 0.85em;
@@ -646,7 +763,7 @@ textarea {
 }
 
 .tag:hover {
-    background-color: #007bff;
+    background-color: var(--btn-primary-bg);
     color: white;
     text-decoration: none;
 }
@@ -663,28 +780,22 @@ textarea {
 .tag-size-9 { font-size: 1.6em; }
 .tag-size-10 { font-size: 1.7em; }
 
-
+/* Reading time and likes */
 .reading-time {
     display: inline-flex;
     align-items: center;
-    background-color: #f0f5ff;
-    color: #0056b3;
+    background-color: var(--reading-time-bg);
+    color: var(--reading-time-color);
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 0.85em;
     margin-bottom: 15px;
     font-weight: 500;
+    line-height: 1.4;  /* Add line height for consistency */
 }
 
 .reading-time:before {
     margin-right: 5px;
-}
-
-@media (max-width: 768px) {
-    .reading-time {
-        font-size: 0.8em;
-        padding: 3px 8px;
-    }
 }
 
 /* Like button styling */
@@ -698,15 +809,15 @@ textarea {
     padding: 5px 10px;
     border-radius: 20px;
     transition: all 0.2s ease;
-    color: #6c757d;
+    color: var(--like-icon-color);
 }
 
 .like-btn:hover {
-    background-color: #f1f1f1;
+    background-color: var(--hover-bg);
 }
 
 .like-btn.liked {
-    color: #e41b17;
+    color: var(--like-icon-active);
 }
 
 .like-btn.liked .like-icon {
@@ -727,46 +838,34 @@ textarea {
     margin: 15px 0;
 }
 
-
-
-
-
 /* Stats container for reading time and likes */
 .post-meta-stats {
     display: flex;
     gap: 15px;
     margin-bottom: 15px;
     flex-wrap: wrap;
+    align-items: center;  /* Ensure alignment */
 }
 
-/* Likes count styling */
 .likes-count {
     display: inline-flex;
     align-items: center;
-    color: #e41b17;
-    padding: 2px 8px;
+    color: var(--likes-count-color);
+    padding: 4px 10px;  /* Match the padding with reading-time */
     border-radius: 20px;
     font-size: 0.85em;
-    background-color: rgba(228, 27, 23, 0.1);
-    margin: 0;
+    background-color: var(--likes-count-bg);
+    font-weight: 500;  /* Add font weight to match reading-time */
+    line-height: 1.4;  /* Add line height for consistency */
 }
-
-/* Reading time styling to match likes-count */
-.reading-time {
-    margin: 0;
-    background-color: rgba(0, 123, 255, 0.1);
-    border-radius: 20px;
-}
-
-
 
 /* Footer */
 footer {
     margin-top: 40px;
     padding-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--border-color-light);
     text-align: center;
-    color: #6c757d;
+    color: var(--text-color-muted);
     font-size: 0.9em;
 }
 
@@ -822,5 +921,21 @@ footer {
     .profile-avatar {
         margin-right: 0;
         margin-bottom: 15px;
+    }
+
+    .reading-time {
+        font-size: 0.8em;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 576px) {
+    .pagination .current-page {
+        margin: 0 5px;
+    }
+
+    .pagination a.btn-small {
+        padding: 4px 8px;
+        font-size: 12px;
     }
 }
