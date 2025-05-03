@@ -1,4 +1,3 @@
-<!-- templates/blog/post_list.html -->
 {% extends 'blog/base.html' %}
 
 {% block title %}Simple Blog{% endblock %}
@@ -41,6 +40,7 @@
             <div class="post-meta-stats">
                 <p class="post-meta reading-time">📚 {{ post.get_reading_time }} min read</p>
                 <p class="post-meta likes-count">❤️ {{ post.likes_count }} likes</p>
+                <p class="post-meta view-count">👁️ {{ post.view_count }} views</p>
             </div>
             {% if post.image %}
                 <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">

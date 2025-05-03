@@ -65,9 +65,6 @@
     <div class="user-posts">
     <h3>My Posts</h3>
     {% if user_posts %}
-
-
-
         <div class="posts-grid">
             <ul>
                 {% for post in user_posts %}
@@ -85,7 +82,11 @@
                             {% endfor %}
                         </p>
                         {% endif %}
-                        <p class="post-meta reading-time">📚 {{ post.get_reading_time }} min read</p>
+                        <div class="post-meta-stats">
+                            <p class="post-meta reading-time">📚 {{ post.get_reading_time }} min read</p>
+                            <p class="post-meta likes-count">❤️ {{ post.get_likes_count }} likes</p>
+                            <p class="post-meta view-count">👁️ {{ post.view_count }} views</p>
+                        </div>
                         {% if post.image %}
                             <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
                         {% endif %}

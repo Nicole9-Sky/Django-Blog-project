@@ -10,9 +10,10 @@ class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'user__email')
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'pub_date', 'category', 'author')
+    list_display = ('title', 'pub_date', 'category', 'author', 'view_count')
     list_filter = ('pub_date', 'category', 'author')
     search_fields = ('title', 'content')
+    readonly_fields = ('view_count',)
 
 
 # Add this to register the Comment model with the admin site
