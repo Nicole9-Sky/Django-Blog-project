@@ -12,7 +12,7 @@
 </div>
 
 <div align="center">
-  <img src="screenshot_.png" alt="Django Blog Platform Screenshot" width="800px"/>
+  <img src="screenshot.png" alt="Django Blog Platform Screenshot" width="800px"/>
   <p><em>Modern Django blog platform with dark mode support</em></p>
 </div>
 
@@ -20,7 +20,7 @@
 
 A feature-rich, production-ready blog platform built with the Django web framework. This project demonstrates advanced Django concepts and best practices, including optimized database queries, AJAX integration, user authentication, social interactions, responsive design patterns, and a modern dark mode interface.
 
-The platform includes a comprehensive set of features typically found in modern blogging systems: user authentication with profiles, full CRUD functionality for posts, a moderated commenting system with nested replies, real-time like/unlike functionality, a powerful tag system for content organization, intelligent search capabilities, and an elegant dark mode toggle for improved accessibility and reading comfort.
+The platform includes a comprehensive set of features typically found in modern blogging systems: user authentication with profiles, full CRUD functionality for posts, a moderated commenting system with nested replies, real-time like/unlike functionality, a powerful tag system for content organization, intelligent search capabilities, post view tracking, and an elegant dark mode toggle for improved accessibility and reading comfort.
 
 While maintaining clean, well-documented code that's easy to understand and extend, this blog platform showcases professional Django development skills and serves as an excellent portfolio piece or foundation for more complex applications.
 
@@ -40,7 +40,15 @@ While maintaining clean, well-documented code that's easy to understand and exte
 - 🎨 Clean, minimal, and responsive design with a two-column layout
 - 📱 Mobile-friendly interface for reading on any device
 - ⏱️ Reading time estimator for each post
+- 👁️ **Post view counter that tracks unique visitor views**
 - 🌓 **Dark Mode Toggle with persistent user preference**
+
+### View Counter Feature
+- 👁️ Track how many times each post has been viewed
+- 📊 Display view counts on all post listings and detail pages
+- 🔒 Session-based tracking to prevent duplicate counts
+- 📈 Admin dashboard shows view statistics
+- 🧠 Helps authors understand their most popular content
 
 ### Dark Mode Feature
 - 🌗 Seamless toggle between light and dark themes
@@ -191,6 +199,16 @@ To populate the blog with content:
 5. Add tags to your post (comma-separated, e.g., "django, tutorial, web-development")
 6. View your published content on the main site or your profile page
 
+### Using the View Counter Feature
+
+The blog now includes an automatic view tracking system:
+
+1. Each time a post is viewed by a unique visitor (based on session), the view count increases
+2. View counts are displayed on all post listings with an eye icon (👁️)
+3. The counter prevents multiple counts from the same visitor during a browser session
+4. Administrators can see post view statistics in the admin panel
+5. This provides valuable metrics on which content is most popular with readers
+
 ### Using the Dark Mode Feature
 
 The blog includes a sophisticated dark mode system:
@@ -262,6 +280,9 @@ Simple-Django-Blog/
 │   └── wsgi.py
 ├── blog/                    # Blog application directory
 │   ├── migrations/          # Database migration files
+│   │   ├── 0001_initial.py
+│   │   ├── ...
+│   │   └── 0007_post_view_count.py  # Migration for the view count feature
 │   ├── __init__.py
 │   ├── admin.py             # Admin registrations for models
 │   ├── apps.py
@@ -301,7 +322,7 @@ Simple-Django-Blog/
 
 This project provides a solid starting point. Here are some ideas for future development to enhance its features:
 
-- 📊 Analytics dashboard for tracking post views
+- 📊 Analytics dashboard for tracking post views and user engagement
 - 📱 Social media sharing buttons
 - 🔑 Social authentication options (Google, Facebook, etc.)
 - 📧 Email subscription for blog updates
@@ -321,6 +342,7 @@ This project provides a solid starting point. Here are some ideas for future dev
 - 📥 Bookmark posts for later reading
 - 📑 Table of contents for longer articles
 - ✅ **Dark mode toggle (Implemented!)**
+- ✅ **Post view counter (Implemented!)**
 
 ## 📜 License
 

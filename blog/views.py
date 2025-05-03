@@ -5,17 +5,16 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Count  # Use this instead of models.Count
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .forms import CommentForm
 from .forms import SearchForm
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserUpdateForm, PostForm
 from .models import Comment
-from .models import Post, Tag
-from django.http import JsonResponse
 from .models import Like
+from .models import Post, Tag
 
 
 
@@ -46,6 +45,7 @@ def tag_posts(request, tag_slug):
     }
 
     return render(request, 'blog/tag_posts.html', context)
+
 
 
 def post_list(request):
@@ -80,11 +80,19 @@ def post_list(request):
     return render(request, 'blog/post_list.html', context)
 
 
+
+
 def post_detail(request, post_id):
     """
     Displays a single blog post and handles comment submission.
     """
     post = get_object_or_404(Post, pk=post_id)
+
+    # Increment the view count - only once per session
+    session_key = f'viewed_post_{post.id}'
+    if not request.session.get(session_key, False):
+        post.increment_view_count()
+        request.session[session_key] = True
 
     # Add a liked_by_user property to the post
     if request.user.is_authenticated:
@@ -438,6 +446,7 @@ def search_posts(request):
     return render(request, 'blog/search_results.html', context)
 
 
+
 def author_profile(request, username):
     """
     View another user's profile and posts with pagination.
@@ -466,5 +475,3 @@ def author_profile(request, username):
     }
 
     return render(request, 'blog/author_profile.html', context)
-
-

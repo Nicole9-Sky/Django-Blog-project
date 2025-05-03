@@ -34,6 +34,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts', null=True)
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
+    view_count = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['-pub_date']
@@ -67,6 +68,11 @@ class Post(models.Model):
 
     def is_liked_by(self, user):
         return self.likes.filter(user=user).exists()
+
+    def increment_view_count(self):
+        """Increment the view count for this post"""
+        self.view_count += 1
+        self.save(update_fields=['view_count'])
 
 
 class UserProfile(models.Model):

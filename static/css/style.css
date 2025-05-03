@@ -45,6 +45,8 @@
     --likes-count-color: #e41b17;
     --hover-bg: #f1f1f1;
     --auth-form-bg: #f9f9f9;
+     --view-count-bg: #ebf6e9;
+    --view-count-color: #28a745;
 }
 
 /* Dark mode variables */
@@ -94,6 +96,8 @@
     --likes-count-color: #ff4d4d;
     --hover-bg: #404040;
     --auth-form-bg: #333;
+    --view-count-bg: #1e3a1f;
+    --view-count-color: #74c686;
 }
 
 /* Basic body and overall container styling */
@@ -838,13 +842,25 @@ textarea {
     margin: 15px 0;
 }
 
+.view-count {
+    display: inline-flex;
+    align-items: center;
+    color: var(--view-count-color);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    background-color: var(--view-count-bg);
+    font-weight: 500;
+    line-height: 1.4;
+}
+
 /* Stats container for reading time and likes */
 .post-meta-stats {
     display: flex;
     gap: 15px;
     margin-bottom: 15px;
     flex-wrap: wrap;
-    align-items: center;  /* Ensure alignment */
+    align-items: center;
 }
 
 .likes-count {
