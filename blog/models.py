@@ -35,6 +35,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts', null=True)
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
     view_count = models.PositiveIntegerField(default=0)
+    is_featured = models.BooleanField(default=False, help_text="Check to display this post in the featured section")
 
     class Meta:
         ordering = ['-pub_date']

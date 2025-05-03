@@ -875,6 +875,286 @@ textarea {
     line-height: 1.4;  /* Add line height for consistency */
 }
 
+/* Featured Posts Styling */
+.featured-posts {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: var(--code-bg);
+    border-radius: 8px;
+    border-left: 4px solid var(--btn-primary-bg);
+}
+
+.featured-posts h2 {
+    margin-top: 0;
+    color: var(--heading-color);
+    margin-bottom: 20px;
+}
+
+/* Featured Posts Carousel Styling */
+.featured-carousel {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.carousel-container {
+    position: relative;
+    background-color: var(--container-bg);
+    border-radius: 8px;
+    box-shadow: 0 3px 10px var(--shadow-color);
+    overflow: hidden;
+}
+
+.carousel-track {
+    position: relative;
+    min-height: 600px; /* Adjust based on your content needs */
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.carousel-btn:hover {
+    background-color: var(--btn-primary-bg);
+    color: white;
+}
+
+.prev-btn {
+    left: 15px;
+}
+
+.next-btn {
+    right: 15px;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.indicator-btn {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgb(159 142 142 / 50%);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.indicator-btn.active {
+    background-color: var(--btn-primary-bg);
+    transform: scale(1.2);
+}
+
+.carousel-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--btn-primary-bg);
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+/* Enhanced featured post styling with two-column layout */
+.featured-post {
+    position: relative;
+    padding: 20px;
+    background-color: var(--container-bg);
+}
+
+.featured-post-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: var(--btn-primary-bg);
+    color: white;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+}
+
+.featured-post-content {
+    display: flex;
+    gap: 30px;
+    height: 100%;
+    align-items: center; /* Center items vertically */
+}
+
+.featured-post-text {
+    flex: 1;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+
+
+
+.featured-post-text .post-content {
+    margin: 15px 0;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.featured-post-image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 45%;
+    height: 400px; /* Fixed height for the image container */
+}
+
+.featured-post-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Adjust responsive settings */
+@media (max-width: 768px) {
+    .carousel-track {
+        min-height: 750px; /* Increased for mobile layout */
+    }
+
+    .featured-post-image-container {
+        height: 300px;
+        max-width: 100%;
+    }
+}
+
+
+
+
+.featured-post-image-placeholder {
+    width: 100%;
+    height: 250px;
+    background-color: var(--code-bg);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color-muted);
+    font-size: 48px;
+}
+
+.featured-read-more {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--btn-primary-bg);
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .carousel-btn {
+    background-color: rgba(50, 50, 50, 0.8);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .carousel-btn:hover {
+    background-color: var(--btn-primary-bg);
+    color: white;
+}
+
+[data-theme="dark"] .indicator-btn {
+    background-color: rgba(100, 100, 100, 0.5);
+}
+
+[data-theme="dark"] .progress-bar {
+    background-color: var(--btn-primary-bg);
+}
+
+/* Responsive adjustments for featured carousel */
+@media (max-width: 768px) {
+    .featured-post-content {
+        flex-direction: column;
+    }
+
+    .featured-post-text,
+    .featured-post-image-container {
+        max-width: 100%;
+    }
+
+    .carousel-track {
+        min-height: 650px; /* Increased height for mobile layout */
+    }
+
+    .featured-post-image-container {
+        order: -1; /* Show image on top on mobile */
+        margin-bottom: 15px;
+    }
+
+    .carousel-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .carousel-track {
+        min-height: 700px;
+    }
+
+    .carousel-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+    }
+}
+
 /* Footer */
 footer {
     margin-top: 40px;
