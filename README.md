@@ -12,8 +12,8 @@
 </div>
 
 <div align="center">
-  <img src="screenshot.png" alt="Django Blog Platform Screenshot" width="800px"/>
-  <p><em>Modern Django blog platform with dark mode support</em></p>
+  <img src="screenshot_.png" alt="Django Blog Platform Screenshot" width="800px"/>
+  <p><em>Modern Django blog platform with featured posts carousel and dark mode support</em></p>
 </div>
 
 ## 📜 Overview
@@ -22,7 +22,7 @@ A feature-rich, production-ready blog platform built with the Django web framewo
 
 The platform includes a comprehensive set of features typically found in modern blogging systems: user authentication with profiles, full CRUD functionality for posts, a moderated commenting system with nested replies, real-time like/unlike functionality, a powerful tag system for content organization, intelligent search capabilities, post view tracking, and an elegant dark mode toggle for improved accessibility and reading comfort.
 
-While maintaining clean, well-documented code that's easy to understand and extend, this blog platform showcases professional Django development skills and serves as an excellent portfolio piece or foundation for more complex applications.
+New in the latest update is a dynamic **Featured Posts Carousel** that highlights your best content in an engaging, interactive way, automatically rotating through featured posts with smooth transitions.
 
 ## ✨ Features
 
@@ -40,8 +40,19 @@ While maintaining clean, well-documented code that's easy to understand and exte
 - 🎨 Clean, minimal, and responsive design with a two-column layout
 - 📱 Mobile-friendly interface for reading on any device
 - ⏱️ Reading time estimator for each post
-- 👁️ **Post view counter that tracks unique visitor views**
-- 🌓 **Dark Mode Toggle with persistent user preference**
+- 👁️ Post view counter that tracks unique visitor views
+- 🌓 Dark Mode Toggle with persistent user preference
+- 🎠 **NEW: Featured Posts Carousel with auto-rotation and navigation**
+
+### Featured Posts Carousel
+- 🔄 Automatically rotates through featured posts with smooth transitions
+- ⏱️ Customizable timing for transitions (default: 6 seconds)
+- 🖱️ Pause on hover functionality to improve user experience
+- 🎯 Navigation controls (prev/next buttons and indicator dots)
+- 📊 Progress bar showing time until next slide
+- 📱 Fully responsive design that adapts to all screen sizes
+- 🎨 Side-by-side layout with content on left, image on right
+- 📄 Integrated with admin interface for easy management
 
 ### View Counter Feature
 - 👁️ Track how many times each post has been viewed
@@ -127,10 +138,11 @@ While maintaining clean, well-documented code that's easy to understand and exte
 - **AJAX**: Fetch API for asynchronous requests (like system)
 - **Icons**: Font Awesome for UI icons
 - **Theme**: CSS Variables for dark mode implementation
+- **Animation**: JavaScript for carousel functionality and smooth transitions
 
 ## 🚀 Setup and Installation
 
-Follow these steps to get the Simple Django Blog Platform running on your local machine after cloning the repository.
+Follow these steps to get the Django Blog Platform running on your local machine after cloning the repository.
 
 ### Prerequisites
 
@@ -143,7 +155,7 @@ Follow these steps to get the Simple Django Blog Platform running on your local 
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/ffiruzi/Django-Blog-Platform.git
+git clone https://github.com/yourusername/Django-Blog-Platform.git
 cd Django-Blog-Platform
 ```
 
@@ -188,161 +200,50 @@ python manage.py runserver
 
 The blog will be accessible in your web browser at http://127.0.0.1:8000/. The administration panel, where you can add and manage content, is located at http://127.0.0.1:8000/admin/.
 
-## 📝 Adding Content
+## 📝 Using Featured Posts
 
-To populate the blog with content:
+The new featured posts carousel is a powerful way to highlight your best content. Here's how to use it:
 
-1. Register a new user account or log in with your superuser credentials
-2. Navigate to your profile and fill out your bio and profile picture (optional)
-3. Create a new post from the navigation bar or your profile page
-4. Assign a category and upload an image (optional)
-5. Add tags to your post (comma-separated, e.g., "django, tutorial, web-development")
-6. View your published content on the main site or your profile page
+1. **Marking Posts as Featured**:
+   - Log in to the admin panel (/admin/)
+   - Go to the Posts section
+   - Edit a post you want to feature
+   - Check the "Is Featured" checkbox
+   - Save the post
 
-### Using the View Counter Feature
+2. **Managing Featured Posts**:
+   - You can feature multiple posts which will rotate in the carousel
+   - Featured posts appear in order of publication date (newest first)
+   - You can bulk edit posts to feature/unfeature them using the admin actions
 
-The blog now includes an automatic view tracking system:
+3. **Carousel Behavior**:
+   - Posts automatically rotate every 6 seconds
+   - Rotation pauses when users hover over the carousel
+   - Users can manually navigate using the arrow buttons or indicator dots
+   - A progress bar shows time until the next slide
 
-1. Each time a post is viewed by a unique visitor (based on session), the view count increases
-2. View counts are displayed on all post listings with an eye icon (👁️)
-3. The counter prevents multiple counts from the same visitor during a browser session
-4. Administrators can see post view statistics in the admin panel
-5. This provides valuable metrics on which content is most popular with readers
+## 🎨 Customization
 
-### Using the Dark Mode Feature
+You can easily customize the carousel behavior and appearance:
 
-The blog includes a sophisticated dark mode system:
+1. **Timing**: Adjust the `intervalTime` variable in the JavaScript to change the rotation speed (default: 6000ms)
+2. **Height**: Modify the `min-height` of `.carousel-track` in CSS to fit your content needs
+3. **Colors**: Update the CSS variables in `:root` to match your brand colors
+4. **Layout**: Adjust the flex properties of `.featured-post-content` to change the text/image ratio
 
-1. Click the moon/sun icon in the header to toggle between light and dark modes
-2. Your theme preference is automatically saved and persists across sessions
-3. The system respects your operating system's dark mode setting by default
-4. All UI elements, including cards, buttons, and text, adapt to the selected theme
-5. Transitions between themes are smooth and visually appealing
+## 📈 Future Enhancements
 
-### Using Tags
-
-The tag system allows for more granular content organization:
-
-1. When creating or editing a post, add tags in the Tags field (separated by commas)
-2. Tags will automatically be created if they don't exist
-3. View the tag cloud on the main page to see popular tags
-4. Click on any tag to see all posts with that tag
-5. Related posts with similar tags appear on the post detail page
-
-### Using the Like System
-
-The blog includes a comprehensive like system for posts and comments:
-
-1. Click the heart icon (❤️) next to any post or comment to like it
-2. Like counts are displayed next to each heart icon on all pages:
-   - On the main blog listing page
-   - In search results
-   - On author profile pages
-   - On tag filtered pages
-   - On post detail pages
-3. Likes are updated in real-time without page reload using AJAX
-4. Your likes are remembered between sessions
-5. You must be logged in to like content (you'll be redirected to login if needed)
-6. The heart turns red when you've liked something, making it easy to see your interactions
-7. Like counts are efficiently loaded using database optimization techniques
-
-### Reading Time Feature
-
-The blog automatically calculates reading time for all posts:
-
-1. Reading time is calculated based on word count and an average reading speed of 200 words per minute
-2. The time is displayed prominently on both post listings and detail pages
-3. This feature helps readers quickly assess how much time they'll need to read a post
-4. The calculation ensures a minimum of 1 minute reading time for very short posts
-
-### Comment Moderation
-
-By default, all comments require approval before being displayed:
-
-1. Users can submit comments on any post after logging in
-2. Comments are held for moderation and not displayed immediately
-3. Site administrators can approve or reject comments through the admin interface
-4. Only approved comments are displayed to all users
-5. Users can only delete their own comments
-
-## 📁 File Structure Overview
-
-The project follows a standard Django project structure:
-
-```
-Simple-Django-Blog/
-├── manage.py                # Django's command-line utility
-├── simpleblogproject/       # Main project configuration files
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings.py          # Project settings (database, installed apps, static/media config)
-│   ├── urls.py              # Project-level URL patterns (includes blog app urls, media serving)
-│   └── wsgi.py
-├── blog/                    # Blog application directory
-│   ├── migrations/          # Database migration files
-│   │   ├── 0001_initial.py
-│   │   ├── ...
-│   │   └── 0007_post_view_count.py  # Migration for the view count feature
-│   ├── __init__.py
-│   ├── admin.py             # Admin registrations for models
-│   ├── apps.py
-│   ├── forms.py             # Forms for authentication, post management, comments, and search
-│   ├── models.py            # Database models (Post, Category, UserProfile, Comment, Tag, Like)
-│   ├── tests.py             # Placeholder for app tests
-│   ├── urls.py              # App-level URL patterns
-│   └── views.py             # Logic to handle requests and return responses
-├── templates/               # Project-level templates directory
-│   └── blog/
-│       ├── base.html        # Base template with navigation and common elements
-│       ├── post_list.html   # Template for displaying list of posts
-│       ├── post_detail.html # Template for displaying a single post with comments and likes
-│       ├── tag_posts.html   # Template for tag-filtered posts
-│       ├── pagination.html  # Reusable pagination component
-│       ├── register.html    # User registration form
-│       ├── login.html       # User login form
-│       ├── profile.html     # User profile management
-│       ├── author_profile.html  # View another user's profile
-│       ├── post_form.html   # Form for creating/editing posts
-│       ├── post_confirm_delete.html # Confirmation for post deletion
-│       ├── comment_confirm_delete.html # Confirmation for comment deletion
-│       └── search_results.html # Display search results
-├── static/                  # Project-level static files directory
-│   ├── css/
-│   │   └── style.css        # Custom CSS with CSS variables for theming
-│   └── js/
-│       └── theme.js         # JavaScript for dark mode toggle
-├── media/                   # Directory for user-uploaded media files
-│   ├── blog_images/         # Blog post images
-│   └── profile_pics/        # User profile pictures
-├── venv/                    # Python Virtual Environment
-└── requirements.txt         # Project dependencies list
-```
-
-## 🚀 Future Enhancements
-
-This project provides a solid starting point. Here are some ideas for future development to enhance its features:
+This project provides a solid starting point. Here are some ideas for future development:
 
 - 📊 Analytics dashboard for tracking post views and user engagement
 - 📱 Social media sharing buttons
 - 🔑 Social authentication options (Google, Facebook, etc.)
 - 📧 Email subscription for blog updates
-- 🌟 Comment rating/liking system
+- 🌟 Extended carousel options (different transition effects, autoplay toggle)
 - 💻 Syntax highlighting for code snippets
 - 📑 Post series/collections functionality
 - 🗂️ Archive view by date
-- 🔍 Advanced search with more filters
-- 💾 Drafts and scheduled posts
-- 🖋️ Rich text editor for post content
-- 📱 RSS feed for post updates
-- 🗳️ User voting/rating system for posts
 - 🎯 Featured or sticky posts
-- 📅 Editorial calendar for content planning
-- 🌍 Internationalization and multiple language support
-- 📊 Reading progress bar for long posts
-- 📥 Bookmark posts for later reading
-- 📑 Table of contents for longer articles
-- ✅ **Dark mode toggle (Implemented!)**
-- ✅ **Post view counter (Implemented!)**
 
 ## 📜 License
 
@@ -351,5 +252,5 @@ This project is licensed under the MIT License.
 ---
 
 <div align="center">
-  <p>Made with ❤️ by <a href="https://github.com/ffiruzi">ffiruzi</a></p>
+  <p>Made with ❤️ by Your Name</p>
 </div>

@@ -17,42 +17,52 @@
                 <div class="carousel-slide {% if forloop.first %}active{% endif %}">
                     <div class="featured-post">
                         <div class="featured-post-badge">Featured</div>
-                        <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
+                        <div class="featured-post-content">
+                            <div class="featured-post-text">
+                                <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
 
-                        {% if post.author %}
-                            <p class="post-meta">By <a href="{% url 'author_profile' post.author.username %}">{{ post.author.username }}</a></p>
-                        {% endif %}
+                                {% if post.author %}
+                                    <p class="post-meta">By <a href="{% url 'author_profile' post.author.username %}">{{ post.author.username }}</a></p>
+                                {% endif %}
 
-                        <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
+                                <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
 
-                        {% if post.category %}
-                            <p class="post-meta">Category: {{ post.category.name }}</p>
-                        {% endif %}
+                                {% if post.category %}
+                                    <p class="post-meta">Category: {{ post.category.name }}</p>
+                                {% endif %}
 
-                        {% if post.tags.all %}
-                            <p class="post-meta">
-                                Tags:
-                                {% for tag in post.tags.all %}
-                                    <a href="{% url 'tag_posts' tag.slug %}" class="tag">{{ tag.name }}</a>{% if not forloop.last %} {% endif %}
-                                {% endfor %}
-                            </p>
-                        {% endif %}
+                                {% if post.tags.all %}
+                                    <p class="post-meta">
+                                        Tags:
+                                        {% for tag in post.tags.all %}
+                                            <a href="{% url 'tag_posts' tag.slug %}" class="tag">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </p>
+                                {% endif %}
 
-                        <div class="post-meta-stats">
-                            <p class="post-meta reading-time">📚 {{ post.get_reading_time }} min read</p>
-                            <p class="post-meta likes-count">❤️ {{ post.get_likes_count }} likes</p>
-                            <p class="post-meta view-count">👁️ {{ post.view_count }} views</p>
+                                <div class="post-meta-stats">
+                                    <p class="post-meta reading-time">📚 {{ post.get_reading_time }} min read</p>
+                                    <p class="post-meta likes-count">❤️ {{ post.likes_count }} likes</p>
+                                    <p class="post-meta view-count">👁️ {{ post.view_count }} views</p>
+                                </div>
+
+                                <div class="post-content">
+                                    <p>{{ post.content|truncatechars:200 }}</p>
+                                </div>
+
+                                <a href="{% url 'post_detail' post.id %}" class="featured-read-more">Read More</a>
+                            </div>
+
+                            <div class="featured-post-image-container">
+                                {% if post.image %}
+                                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="featured-post-image">
+                                {% else %}
+                                    <div class="featured-post-image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
-
-                        {% if post.image %}
-                            <img src="{{ post.image_url }}" alt="{{ post.title }}" class="featured-post-image">
-                        {% endif %}
-
-                        <div class="post-content">
-                            <p>{{ post.content|truncatechars:150 }}</p>
-                        </div>
-
-                        <a href="{% url 'post_detail' post.id %}" class="featured-read-more">Read More</a>
                     </div>
                 </div>
                 {% endfor %}
@@ -108,7 +118,7 @@
                 <p class="post-meta">
                     Tags:
                     {% for tag in post.tags.all %}
-                        <a href="{% url 'tag_posts' tag.slug %}" class="tag">{{ tag.name }}</a>{% if not forloop.last %} {% endif %}
+                        <a href="{% url 'tag_posts' tag.slug %}" class="tag">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </p>
             {% endif %}
@@ -118,7 +128,7 @@
                 <p class="post-meta view-count">👁️ {{ post.view_count }} views</p>
             </div>
             {% if post.image %}
-                <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image">
             {% endif %}
             <div class="post-content">
                 <p>{{ post.content|truncatechars:250 }}</p>
@@ -197,35 +207,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 animationFrame = requestAnimationFrame(updateProgress);
             } else {
                 nextSlide();
+                resetTimer();
             }
         }
 
         // Set up event listeners
-        nextButton.addEventListener('click', () => {
+        nextButton.addEventListener('click', function() {
             nextSlide();
             resetTimer();
         });
 
-        prevButton.addEventListener('click', () => {
+        prevButton.addEventListener('click', function() {
             prevSlide();
             resetTimer();
         });
 
         // Set up indicator buttons
         indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => {
+            indicator.addEventListener('click', function() {
                 showSlide(index);
                 resetTimer();
             });
         });
 
         // Pause on hover
-        carousel.addEventListener('mouseenter', () => {
+        carousel.addEventListener('mouseenter', function() {
             clearInterval(interval);
             cancelAnimationFrame(animationFrame);
         });
 
-        carousel.addEventListener('mouseleave', () => {
+        carousel.addEventListener('mouseleave', function() {
             resetTimer();
         });
 
@@ -240,6 +251,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Start the carousel
         resetTimer();
+
+        console.log('Carousel initialized with ' + slides.length + ' slides');
+    } else {
+        console.log('Carousel container not found');
     }
 });
 </script>
