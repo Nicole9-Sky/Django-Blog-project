@@ -5,6 +5,79 @@
 {% block content %}
 <h1>Blog Posts</h1>
 
+<!-- Featured Posts Carousel -->
+{% if featured_posts %}
+<div class="featured-posts">
+    <h2>Featured Posts</h2>
+
+    <div class="featured-carousel">
+        <div class="carousel-container">
+            <div class="carousel-track">
+                {% for post in featured_posts %}
+                <div class="carousel-slide {% if forloop.first %}active{% endif %}">
+                    <div class="featured-post">
+                        <div class="featured-post-badge">Featured</div>
+                        <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
+
+                        {% if post.author %}
+                            <p class="post-meta">By <a href="{% url 'author_profile' post.author.username %}">{{ post.author.username }}</a></p>
+                        {% endif %}
+
+                        <p class="post-meta">Published on: {{ post.pub_date|date:"F j, Y" }}</p>
+
+                        {% if post.category %}
+                            <p class="post-meta">Category: {{ post.category.name }}</p>
+                        {% endif %}
+
+                        {% if post.tags.all %}
+                            <p class="post-meta">
+                                Tags:
+                                {% for tag in post.tags.all %}
+                                    <a href="{% url 'tag_posts' tag.slug %}" class="tag">{{ tag.name }}</a>{% if not forloop.last %} {% endif %}
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+
+                        <div class="post-meta-stats">
+                            <p class="post-meta reading-time">📚 {{ post.get_reading_time }} min read</p>
+                            <p class="post-meta likes-count">❤️ {{ post.get_likes_count }} likes</p>
+                            <p class="post-meta view-count">👁️ {{ post.view_count }} views</p>
+                        </div>
+
+                        {% if post.image %}
+                            <img src="{{ post.image_url }}" alt="{{ post.title }}" class="featured-post-image">
+                        {% endif %}
+
+                        <div class="post-content">
+                            <p>{{ post.content|truncatechars:150 }}</p>
+                        </div>
+
+                        <a href="{% url 'post_detail' post.id %}" class="featured-read-more">Read More</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Carousel Navigation Controls -->
+            <button class="carousel-btn prev-btn">&lsaquo;</button>
+            <button class="carousel-btn next-btn">&rsaquo;</button>
+
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                {% for post in featured_posts %}
+                    <button class="indicator-btn {% if forloop.first %}active{% endif %}" data-slide-index="{{ forloop.counter0 }}"></button>
+                {% endfor %}
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="carousel-progress">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <!-- Add Tag Cloud -->
 {% if tags %}
 <div class="tag-cloud">
@@ -17,6 +90,8 @@
 </div>
 {% endif %}
 
+<!-- Regular Posts Section -->
+<h2>Recent Posts</h2>
 <div class="posts-grid">
     <ul>
         {% for post in posts %}
@@ -60,4 +135,112 @@
 {% if posts.has_other_pages %}
     {% include 'blog/pagination.html' with page_obj=posts %}
 {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Carousel functionality
+    const carousel = document.querySelector('.carousel-container');
+    if (carousel) {
+        const track = carousel.querySelector('.carousel-track');
+        const slides = Array.from(track.querySelectorAll('.carousel-slide'));
+        const nextButton = carousel.querySelector('.next-btn');
+        const prevButton = carousel.querySelector('.prev-btn');
+        const indicators = Array.from(carousel.querySelectorAll('.indicator-btn'));
+        const progressBar = carousel.querySelector('.progress-bar');
+
+        // Configuration
+        const intervalTime = 6000; // Time between auto-transitions (6 seconds)
+        let slideIndex = 0;
+        let interval;
+        let animationFrame;
+        let progressValue = 0;
+
+        // Function to show a specific slide
+        function showSlide(index) {
+            // Normalize index (loop back to beginning/end)
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
+
+            // Update current index
+            slideIndex = index;
+
+            // Remove active class from all slides and set active on current
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[slideIndex].classList.add('active');
+
+            // Update indicators
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            indicators[slideIndex].classList.add('active');
+
+            // Reset progress
+            progressValue = 0;
+            progressBar.style.width = '0%';
+        }
+
+        // Function to move to next slide
+        function nextSlide() {
+            showSlide(slideIndex + 1);
+        }
+
+        // Function to move to previous slide
+        function prevSlide() {
+            showSlide(slideIndex - 1);
+        }
+
+        // Function to update progress bar
+        function updateProgress() {
+            if (progressValue < 100) {
+                progressValue += 100 / (intervalTime / 16.67); // 60fps approximation
+                progressBar.style.width = `${progressValue}%`;
+                animationFrame = requestAnimationFrame(updateProgress);
+            } else {
+                nextSlide();
+            }
+        }
+
+        // Set up event listeners
+        nextButton.addEventListener('click', () => {
+            nextSlide();
+            resetTimer();
+        });
+
+        prevButton.addEventListener('click', () => {
+            prevSlide();
+            resetTimer();
+        });
+
+        // Set up indicator buttons
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+                resetTimer();
+            });
+        });
+
+        // Pause on hover
+        carousel.addEventListener('mouseenter', () => {
+            clearInterval(interval);
+            cancelAnimationFrame(animationFrame);
+        });
+
+        carousel.addEventListener('mouseleave', () => {
+            resetTimer();
+        });
+
+        // Function to reset the timer
+        function resetTimer() {
+            clearInterval(interval);
+            cancelAnimationFrame(animationFrame);
+            progressValue = 0;
+            progressBar.style.width = '0%';
+            animationFrame = requestAnimationFrame(updateProgress);
+        }
+
+        // Start the carousel
+        resetTimer();
+    }
+});
+</script>
 {% endblock %}

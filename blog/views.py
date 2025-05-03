@@ -47,39 +47,44 @@ def tag_posts(request, tag_slug):
     return render(request, 'blog/tag_posts.html', context)
 
 
-
 def post_list(request):
     """
-    Displays a paginated list of all blog posts with a limited tag cloud.
+    Displays a paginated list of blog posts with featured posts carousel.
     """
     from django.db.models import Count
 
-    # Annotate posts with like counts for better performance
-    posts_list = Post.objects.annotate(likes_count=Count('likes')).order_by('-pub_date')
+    # Get featured posts with like counts
+    featured_posts = Post.objects.filter(is_featured=True).annotate(
+        likes_count=Count('likes')
+    ).order_by('-pub_date')
+
+    # Get regular posts with like counts (excluding featured ones)
+    regular_posts_list = Post.objects.filter(is_featured=False).annotate(
+        likes_count=Count('likes')
+    ).order_by('-pub_date')
 
     # Get the most used tags (limited to 20)
     tags = Tag.objects.annotate(
         num_posts=Count('posts')
-    ).order_by('-num_posts')[:20]  # Limit to top 20 tags
+    ).order_by('-num_posts')[:20]
 
-    # Set up pagination with 6 posts per page
-    paginator = Paginator(posts_list, 6)
+    # Set up pagination for regular posts only
+    paginator = Paginator(regular_posts_list, 6)
     page = request.GET.get('page')
 
     try:
-        posts = paginator.page(page)
+        regular_posts = paginator.page(page)
     except PageNotAnInteger:
-        posts = paginator.page(1)
+        regular_posts = paginator.page(1)
     except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
+        regular_posts = paginator.page(paginator.num_pages)
 
     context = {
-        'posts': posts,
+        'featured_posts': featured_posts,
+        'posts': regular_posts,
         'tags': tags
     }
     return render(request, 'blog/post_list.html', context)
-
-
 
 
 def post_detail(request, post_id):

@@ -10,10 +10,21 @@ class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'user__email')
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'pub_date', 'category', 'author', 'view_count')
-    list_filter = ('pub_date', 'category', 'author')
+    list_display = ('title', 'pub_date', 'category', 'author', 'view_count', 'is_featured')
+    list_filter = ('pub_date', 'category', 'author', 'is_featured')
+    actions = ['make_featured', 'remove_featured']
     search_fields = ('title', 'content')
     readonly_fields = ('view_count',)
+
+    def make_featured(self, request, queryset):
+        queryset.update(is_featured=True)
+
+    make_featured.short_description = "Mark selected posts as featured"
+
+    def remove_featured(self, request, queryset):
+        queryset.update(is_featured=False)
+
+    remove_featured.short_description = "Remove selected posts from featured"
 
 
 # Add this to register the Comment model with the admin site
