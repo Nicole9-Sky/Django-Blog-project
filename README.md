@@ -252,5 +252,5 @@ This project is licensed under the MIT License.
 ---
 
 <div align="center">
-  <p>Made with ❤️ by Your Name</p>
+  <p>Made with ❤️ by <a href="https://github.com/ffiruzi">ffiruzi</a></p>
 </div>
