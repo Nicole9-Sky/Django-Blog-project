@@ -4,32 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Django Blog{% endblock %}</title>
+    <title>{% block title %}FREDA'S BLOG{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="header-left">
-                <h1 class="site-title"><a href="{% url 'post_list' %}">My Django Blog</a></h1>
+        <header class="site-header">
+            <div class="branding">
+            <a href="{% url 'post_list' %}">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="site-logo">
+    </a>
+            <div class="branding-text">
+                <h1 class="site-title">
+                    <a href="{% url 'post_list' %}">FREDA'S BLOG</a>
+                </h1>
+                <p class="tagline">✨ Thoughts, Stories &amp; Code ✨</p>
+            </div>
             </div>
 
-            <div class="header-right">
-                <div class="search-box">
+                <div class="header-right">
+                 <div class="nav-search-wrapper">
+                  <div class="search-box">
                     <form method="get" action="{% url 'search_posts' %}" class="search-form">
                         <input type="text" name="query" placeholder="Search posts..." class="search-input">
                         <button type="submit" class="search-btn">Search</button>
                     </form>
                 </div>
 
-                <!-- Dark mode toggle button -->
+                <!-- Dark mode toggle -->
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
                     <i class="fas fa-moon"></i>
                     <i class="fas fa-sun"></i>
                 </button>
 
+                <!-- Nav menu -->
                 <nav class="main-nav">
                     <ul>
                         <li><a href="{% url 'post_list' %}">Home</a></li>
@@ -56,16 +67,15 @@
             </div>
         {% endif %}
 
-        <main>
+        <main class="site-main">
             {% block content %}{% endblock %}
-        </main>
-
-        <footer>
-            <p>&copy; {% now "Y" %} Simple Blog. All rights reserved.</p>
+        </main>    
+        <footer class="site-footer">
+            <p>&copy; {% now "Y" %} Chioma’s Blog. Crafted with 💻 and ☕</p>
         </footer>
     </div>
 
-    <!-- Theme switcher script -->
+    <!-- JS -->
     <script src="{% static 'js/theme.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>

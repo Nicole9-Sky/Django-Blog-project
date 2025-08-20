@@ -1,51 +1,62 @@
 /* CSS Variables for theming */
 :root {
-    --bg-color: #f4f4f4;
-    --container-bg: #fff;
-    --text-color: #333;
-    --text-color-light: #666;
-    --text-color-muted: #6c757d;
-    --link-color: #007bff;
-    --link-hover-color: #0056b3;
-    --border-color: #ddd;
-    --border-color-light: #eee;
-    --heading-color: #333;
-    --input-bg: #fff;
-    --input-border: #ddd;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --code-bg: #f8f9fa;
-    --success-bg: #d4edda;
-    --success-color: #155724;
-    --success-border: #c3e6cb;
-    --error-bg: #f8d7da;
-    --error-color: #721c24;
+    --bg-color: #111; /* Body background */
+    --container-bg: #1c1c1c; /* Card or box background */
+    --text-color: #f1f1f1;
+    --text-color-light: #aaa;
+    --text-color-muted: #888;
+    --link-color: #00bfff;
+    --link-hover-color: #1e90ff;
+    --border-color: #333;
+    --border-color-light: #444;
+    --heading-color: #ffffff;
+    --input-bg: #222;
+    --input-border: #444;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --code-bg: #2d2d2d;
+
+    --success-bg: #155724;
+    --success-color: #d4edda;
+    --success-border: #1e7e34;
+
+    --error-bg: #721c24;
+    --error-color: #f8d7da;
     --error-border: #f5c6cb;
-    --warning-bg: #fff3cd;
-    --warning-color: #856404;
+
+    --warning-bg: #856404;
+    --warning-color: #fff3cd;
     --warning-border: #ffeeba;
-    --info-bg: #d1ecf1;
-    --info-color: #0c5460;
+
+    --info-bg: #0c5460;
+    --info-color: #d1ecf1;
     --info-border: #bee5eb;
+
     --btn-primary-bg: #007bff;
     --btn-primary-hover: #0056b3;
     --btn-secondary-bg: #6c757d;
     --btn-secondary-hover: #5a6268;
     --btn-danger-bg: #dc3545;
     --btn-danger-hover: #c82333;
-    --tag-bg: #e9ecef;
-    --tag-color: #495057;
-    --comment-bg: #fff;
-    --comment-reply-bg: #f8f9fa;
-    --profile-placeholder-bg: #e9ecef;
-    --like-icon-color: #6c757d;
+
+    --tag-bg: #333;
+    --tag-color: #ddd;
+    --comment-bg: white;
+    --comment-reply-bg: white;
+    --profile-placeholder-bg: #444;
+
+    --like-icon-color: #aaa;
     --like-icon-active: #e41b17;
-    --reading-time-bg: #f0f5ff;
-    --reading-time-color: #0056b3;
-    --likes-count-bg: rgba(228, 27, 23, 0.1);
+
+    --reading-time-bg: #222;
+    --reading-time-color: white;
+
+    --likes-count-bg: #311;
     --likes-count-color: #e41b17;
-    --hover-bg: #f1f1f1;
-    --auth-form-bg: #f9f9f9;
-     --view-count-bg: #ebf6e9;
+
+    --hover-bg: #2a2a2a;
+    --auth-form-bg: #1d1d1d;
+
+    --view-count-bg: #203020;
     --view-count-color: #28a745;
 }
 
@@ -91,7 +102,7 @@
     --like-icon-color: #9a9a9a;
     --like-icon-active: #ff4d4d;
     --reading-time-bg: rgba(77, 171, 247, 0.1);
-    --reading-time-color: #4dabf7;
+    --reading-time-color: white;
     --likes-count-bg: rgba(255, 77, 77, 0.1);
     --likes-count-color: #ff4d4d;
     --hover-bg: #404040;
@@ -102,19 +113,35 @@
 
 /* Basic body and overall container styling */
 body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.7;
     margin: 0;
-    padding: 20px;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    padding: 40px;
+    background-color: #000000;
+    color: #f0f0f0;
     transition: background-color 0.3s ease, color 0.3s ease;
+    background-image: url('/static/images/design1.png');
+    background-repeat: repeat;
+    background-size: 150px 150px; 
+    background-position: top left; 
+}
+
+.main-content {
+    background-color: black;
+    z-index: 1;
+    position: relative;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
 }
 
 .container {
+    width: 90%;
     max-width: 1000px;
     margin: 20px auto;
-    background: var(--container-bg);
+    background: white;
     padding: 20px 30px;
     box-shadow: 0 0 10px var(--shadow-color);
     border-radius: 8px;
@@ -123,6 +150,8 @@ body {
 
 /* Updated header and navigation */
 header {
+    padding: 15px 0;
+    text-align: center;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -137,56 +166,65 @@ header {
 }
 
 .header-right {
+    position: relative;
+    top: -30px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
     justify-content: flex-end;
     flex-grow: 1;
-    gap: 15px;
+    gap: 5px;
 }
 
 .site-title {
     margin: 0;
-    font-size: 1.8rem;
+    font-size: 3.2rem;
     white-space: nowrap;
+    font-weight: bold;
 }
 
 .site-title a {
-    color: var(--link-color);
+    color: #000000;
     text-decoration: none;
 }
 
 /* Compact search box */
 .search-box {
     flex-shrink: 1;
+    display: flex;
     max-width: 300px;
+    margin-top: 15px;
+    gap: 5px;
 }
 
 .search-form {
     display: flex;
     align-items: center;
+    gap: 5px;
 }
 
 .search-input {
-    padding: 6px 10px;
-    border: 1px solid var(--input-border);
-    border-radius: 4px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;;
+    border-radius: 5px;
     width: 180px;
     font-size: 14px;
     height: 34px;
     margin-right: 5px;
-    background-color: var(--input-bg);
+    background-color: white;
     color: var(--text-color);
 }
 
 .search-btn {
-    background-color: var(--btn-primary-bg);
-    color: white;
+    background-color: gold;
+    color: black;
     border: none;
-    padding: 6px 12px;
+    padding: 9px 15px;
     border-radius: 4px;
     cursor: pointer;
     height: 34px;
     font-size: 14px;
+    font-weight: bold;
 }
 
 .search-btn:hover {
@@ -201,7 +239,7 @@ header {
     padding: 5px 8px;
     border-radius: 4px;
     font-size: 20px;
-    color: var(--text-color);
+    color: #000000;
     transition: background-color 0.3s ease;
     margin-right: 10px;
 }
@@ -236,7 +274,7 @@ header {
     list-style: none;
     padding: 0;
     margin: 0;
-    gap: 5px;
+    gap: 20px;
 }
 
 .main-nav li {
@@ -245,7 +283,7 @@ header {
 
 .main-nav a {
     text-decoration: none;
-    color: var(--text-color);
+    color:  #000000;
     font-weight: bold;
     padding: 5px 8px;
     border-radius: 4px;
@@ -261,12 +299,12 @@ header {
 
 /* Headings and links */
 h1, h2, h3 {
-    color: var(--heading-color);
+    color: rgb(4, 4, 242);
     margin-bottom: 10px;
 }
 
 h1 {
-    color: var(--link-color);
+    color: #000000;
 }
 
 a {
@@ -322,16 +360,18 @@ label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: var(--text-color);
 }
 
 input, textarea, select {
     width: 100%;
-    padding: 8px;
+    padding: 8px 10px;
     border: 1px solid var(--input-border);
-    border-radius: 4px;
+    border-radius: 5px;
     font-size: 16px;
     background-color: var(--input-bg);
     color: var(--text-color);
+    transition: all 0.2s ease;
 }
 
 textarea {
@@ -346,32 +386,33 @@ textarea {
 }
 
 .error-message {
-    color: var(--error-color);
-    margin-top: 5px;
-    font-size: 0.85em;
+    color: red;
+    margin-top: 4px;
+    font-size: 0.9em;
 }
 
 /* Buttons */
 .btn, button[type="submit"] {
     display: inline-block;
-    padding: 8px 16px;
-    background-color: var(--btn-primary-bg);
-    color: white;
+    padding: 10px 16px;
+    background-color: #000000;
+    color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     text-decoration: none;
+    text-transform: uppercase;
     transition: background-color 0.3s ease;
 }
 
 .btn:hover, button[type="submit"]:hover {
-    background-color: var(--btn-primary-hover);
+    background-color: #0056b3;
     text-decoration: none;
 }
 
 .btn-secondary {
-    background-color: var(--btn-secondary-bg);
+    background-color: gray;
 }
 
 .btn-secondary:hover {
@@ -387,8 +428,13 @@ textarea {
 }
 
 .btn-small {
-    padding: 5px 10px;
+    padding: 6px 12px;
     font-size: 14px;
+    margin-right: 8px;
+    border-radius: 5px;
+    background: var(--btn-secondary-bg);
+    color: white;
+    text-decoration: none;
 }
 
 /* Authentication forms */
@@ -416,24 +462,39 @@ textarea {
 /* Profile pages */
 .profile-container {
     margin-bottom: 30px;
+    background: #000000;
+    color: white;
+    padding: 40px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--shadow-color);
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s ease;
 }
 
 .profile-header {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    gap: 40px;
+    margin-bottom: 30px;
 }
 
 .profile-avatar {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
+    border: 4px solid #eee;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    object-fit: cover;
     margin-right: 20px;
-    background-color: var(--profile-placeholder-bg);
+    background-color: #000000;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 50px;
+    color: #000000;
 }
 
 .profile-avatar img {
@@ -449,42 +510,62 @@ textarea {
 
 .profile-info {
     flex: 1;
+    margin: 5px 0;
+    color: white;
 }
 
 .profile-info h2 {
     margin-bottom: 5px;
+    margin: 0;
+    color: white;
 }
 
 .profile-name, .profile-email, .profile-website {
     margin: 5px 0;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
 }
 
 .profile-bio {
     margin-bottom: 30px;
+    margin-top: 20px;
     padding: 15px;
     background-color: var(--code-bg);
+    border-left: 4px solid var(--link-color);
     border-radius: 8px;
 }
 
 .profile-actions, .user-posts, .author-posts {
-    margin-top: 30px;
+    margin: 30px 0;
+    padding: 20px;
+    background-color: var(--auth-form-bg);
+    border-radius: 8px; 
 }
 
 .profile-form {
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .form-row {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .form-column {
     flex: 1;
+    min-width: 250px;
 }
 
 /* Post management */
 .post-form-container {
+    background: black;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
     max-width: 800px;
     margin: 0 auto;
 }
@@ -503,17 +584,30 @@ textarea {
 }
 
 .post-actions {
-    margin-top: 20px;
+    margin-top: 40px;
     display: flex;
     gap: 10px;
 }
 
+.post-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #555;
+}
+
+.post-date {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 10px;
+}
 /* Style for the list of posts on the homepage (grid layout) */
 .posts-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
     gap: 30px;
+    padding: 20px;
     margin-top: 20px;
+    background-color: #000000;
 }
 
 .posts-grid ul {
@@ -525,20 +619,22 @@ textarea {
 
 .posts-grid li {
     border: 1px solid var(--border-color);
-    padding: 15px;
-    margin-bottom: 0;
-    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
     background-color: var(--container-bg);
-    box-shadow: 0 2px 4px var(--shadow-color);
+    box-shadow:  0 4px 20px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .posts-grid li:hover {
     transform: translateY(-5px);
+    transform: scale(1.02);
     box-shadow: 0 4px 8px var(--shadow-color);
+    background-color: #000000;
 }
 
 .posts-grid li:last-child {
@@ -549,6 +645,7 @@ textarea {
 
 .posts-grid li h2 {
     margin-top: 0;
+    font-size: 20px;
     margin-bottom: 10px;
     line-height: 1.3;
 }
@@ -556,16 +653,24 @@ textarea {
 .posts-grid li .post-meta {
     margin-bottom: 10px;
     font-size: 0.85em;
-    color: var(--text-color-muted);
+    color: white;
+    margin: 4px 0;
 }
 
 .posts-grid li .post-image {
     width: 100%;
-    height: 180px;
+    height: auto;
     object-fit: cover;
-    margin-bottom: 15px;
-    border-radius: 4px;
-    display: block;
+    margin: 10px 0;
+    border-radius: 8px;
+    display: flex;
+    gap: 15px;
+}
+
+.post-images img {
+    width: 48%;
+    border-radius: 8px;
+    object-fit: cover;
 }
 
 .posts-grid li .post-content {
@@ -745,25 +850,33 @@ textarea {
 .tag-cloud {
     margin: 20px 0 30px;
     padding: 15px;
-    background-color: var(--code-bg);
+    background-color: #000000;
     border-radius: 8px;
 }
 
 .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
 }
 
 .tag {
     display: inline-block;
     background-color: var(--tag-bg);
     color: var(--tag-color);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.85em;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
     transition: all 0.2s ease;
+    margin-right: 4px;
     text-decoration: none;
+}
+
+.tagline {
+    font-size: 1.6rem;
+    font-family: 'Cursive', sans-serif; /* decorative font */
+    margin-top: 8px;
+    color: darkgoldenrod;
 }
 
 .tag:hover {
@@ -860,6 +973,7 @@ textarea {
     gap: 15px;
     margin-bottom: 15px;
     flex-wrap: wrap;
+    font-size: 14px;
     align-items: center;
 }
 
@@ -879,7 +993,7 @@ textarea {
 .featured-posts {
     margin-bottom: 40px;
     padding: 20px;
-    background-color: var(--code-bg);
+    background-color: #000000;
     border-radius: 8px;
     border-left: 4px solid var(--btn-primary-bg);
 }
@@ -1006,7 +1120,7 @@ textarea {
 .featured-post {
     position: relative;
     padding: 20px;
-    background-color: var(--container-bg);
+    background-color: #000000
 }
 
 .featured-post-badge {
@@ -1036,6 +1150,7 @@ textarea {
     display: flex;
     flex-direction: column;
     height: 100%;
+    background-color: #000000;
 }
 
 
@@ -1161,7 +1276,7 @@ footer {
     padding-top: 20px;
     border-top: 1px solid var(--border-color-light);
     text-align: center;
-    color: var(--text-color-muted);
+    color: #000000;
     font-size: 0.9em;
 }
 
@@ -1234,4 +1349,27 @@ footer {
         padding: 4px 8px;
         font-size: 12px;
     }
+}
+
+.site-logo {
+    height: 180px; 
+    width: auto;  
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+}
+
+
+.branding {
+    display: flex;
+    align-items: center;
+    gap: 7px; /* space between logo and text */
+}
+
+.branding-text {
+    text-align: left;
 }

@@ -33,7 +33,10 @@
     </div>
 
     {% if post.image %}
-        <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
+    <div class="post-images">
+    <img src="{{ post.image_url }}" alt="{{ post.title }}">
+    <img src="{% static 'images/second-image.jpg' %}" alt="Second image">
+</div>
     {% endif %}
 
     <div class="post-content">
